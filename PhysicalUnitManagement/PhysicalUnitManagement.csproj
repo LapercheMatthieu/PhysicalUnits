@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <ImplicitUsings>enable</ImplicitUsings>
+
+	  <!-- Propriétés NuGet -->
+	  <PackageId> PhysicalUnitManagement</PackageId>
+	  <Version>1.0.7</Version>
+	  <Authors>Mechatronics</Authors>
+	  <Company>Bontaz</Company>
+	  <Description>Bibliothèque WPF qui gère les unités physiques et les calculs, les principaux Views sont : PhysicalUnitButton, PhysicalUnitCombobox et PhysicalUnitEquationButton</Description>
+	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	  <IncludeReferencedProjects>true</IncludeReferencedProjects>
+	  
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Fractions" Version="8.3.2" />
+    <PackageReference Include=" UI" Version="1.0.10" />
+    <PackageReference Include="SQLiteManager" Version="1.0.3" />
+  </ItemGroup>
+	
+	<!-- Inclusion des DLLs des projets référencés dans le package NuGet -->
+	<PropertyGroup>
+		<TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);CopyProjectReferencesToPackage</TargetsForTfmSpecificBuildOutput>
+	</PropertyGroup>
+
+	<Target Name="CopyProjectReferencesToPackage" DependsOnTargets="BuildOnlySettings;ResolveReferences">
+		<ItemGroup>
+			<BuildOutputInPackage Include="@(ReferenceCopyLocalPaths-&gt;WithMetadataValue('ReferenceSourceTarget', 'ProjectReference'))" />
+		</ItemGroup>
+	</Target>
+</Project>
+

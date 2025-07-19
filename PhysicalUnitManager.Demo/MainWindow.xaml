@@ -1,0 +1,28 @@
+﻿<Window x:Class=" PhysicalUnitManager.Demo.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace: PhysicalUnitManager.Demo" xmlns:views="clr-namespace: PhysicalUnitManagement.Views;assembly= PhysicalUnitManagement" xmlns:viewsbuttons="clr-namespace: PhysicalUnitManagement.ViewsButtons;assembly= PhysicalUnitManagement"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="800" Width="800"
+         WindowState="Maximized" x:Name="MainWindowRoot">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBox x:Name="Report" Grid.Row ="0"/>
+        <views:PhysicalUnitBuilder Grid.Row="1"/>
+        <viewsbuttons:PhysicalUnitButton Grid.Row="2"/>
+        <viewsbuttons:PhysicalUnitCombobox x:Name="UnitCB" Grid.Row="3"/>
+
+        <ScrollViewer Grid.Row="4">
+            <local:PhysicalUnitDemoControl/>
+
+        </ScrollViewer>
+    </Grid>
+</Window>
