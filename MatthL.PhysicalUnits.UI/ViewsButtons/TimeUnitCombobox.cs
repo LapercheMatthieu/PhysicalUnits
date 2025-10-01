@@ -1,6 +1,6 @@
-﻿using MatthL.PhysicalUnits.Enums;
-using MatthL.PhysicalUnits.Models;
-using MatthL.PhysicalUnits.Services;
+﻿using MatthL.PhysicalUnits.Core.Enums;
+using MatthL.PhysicalUnits.Core.Models;
+using MatthL.PhysicalUnits.Core.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,10 +16,10 @@ namespace MatthL.PhysicalUnits.ViewsButtons
         {
             var UnitList = new List<PhysicalUnit>()
             {
-                StandardUnits.Second(Enums.Prefix.nano),
-                StandardUnits.Second(Enums.Prefix.micro),
-                StandardUnits.Second(Enums.Prefix.milli),
-                StandardUnits.Second(Enums.Prefix.SI),
+                StandardUnits.Second(Prefix.nano),
+                StandardUnits.Second(Prefix.micro),
+                StandardUnits.Second(Prefix.milli),
+                StandardUnits.Second(Prefix.SI),
                 StandardUnits.Minute,
                 StandardUnits.Hour,
                 StandardUnits.Day,

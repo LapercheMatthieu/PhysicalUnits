@@ -1,5 +1,5 @@
 ﻿using MahApps.Metro.IconPacks;
-using MatthL.PhysicalUnits.Models;
+using MatthL.PhysicalUnits.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 
-namespace MatthL.PhysicalUnits.ViewsButtons.Converters
+namespace MatthL.PhysicalUnits.UI.ViewsButtons.Converters
 {
     public class ConvertionToKindConverter : IValueConverter
     {

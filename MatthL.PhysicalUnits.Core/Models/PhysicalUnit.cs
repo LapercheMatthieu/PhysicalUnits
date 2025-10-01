@@ -1,19 +1,20 @@
 ﻿
-using MatthL.PhysicalUnits.Enums;
-using MatthL.PhysicalUnits.Tools;
+using MatthL.PhysicalUnits.Core.Abstractions;
+using MatthL.PhysicalUnits.Core.DimensionFormulas;
+using MatthL.PhysicalUnits.Core.Enums;
+using MatthL.SqliteEF.Core.Models;
 using Microsoft.EntityFrameworkCore;
-using SQLiteManager.Models;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.InteropServices;
 
-namespace MatthL.PhysicalUnits.Models
+namespace MatthL.PhysicalUnits.Core.Models
 {
     /// <summary>
     /// Représente une unité physique 
     /// Contient une liste de BaseUnits avec leurs exposants
     /// </summary>
-    public class PhysicalUnit : IBaseEntity
+    public class PhysicalUnit : IBaseEntity, IBaseUnit
     {
         [Key]
         public int Id { get; set; }
@@ -39,7 +40,7 @@ namespace MatthL.PhysicalUnits.Models
             {
                 var systems = BaseUnits.Select(b => b.UnitSystem).Distinct().ToList();
                 if (systems.Count == 1) return systems[0];
-                return StandardUnitSystem.Mixte;
+                return StandardUnitSystem.Mixed;
             }
         }
         [NotMapped]

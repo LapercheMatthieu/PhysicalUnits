@@ -1,63 +1,66 @@
-﻿using System;
+﻿using MatthL.PhysicalUnits.Core.EnumHelpers;
+using MatthL.PhysicalUnits.Core.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MatthL.PhysicalUnits.Enums
+namespace MatthL.PhysicalUnits.Core.Enums
 {
     /// <summary>
-    /// Domaines d'unités physiques avec attributs de description
+    /// Physical domains to categorize units by their application area
     /// </summary>
     public enum PhysicalUnitDomain
     {
-        [Description("Unités fondamentales du système international")]
-        [DisplayName("Unités Standards")]
-        DimensionsDeBase,
+        [Description("Fundamental units of the International System")]
+        [DisplayedName("Base Units")]
+        BaseUnits,
 
-        [Description("Unités liées à la mécanique et au mouvement")]
-        [DisplayName("Mécanique")]
-        Mecanique,
+        [Description("Units related to mechanics and motion")]
+        [DisplayedName("Mechanics")]
+        Mechanics,
 
-        [Description("Unités électriques et électromagnétiques")]
-        [DisplayName("Electricité")]
-        Electricite,
+        [Description("Electrical and electromagnetic units")]
+        [DisplayedName("Electricity")]
+        Electricity,
 
-        [Description("Unités liées à la chaleur et à la thermodynamique")]
-        [DisplayName("Thermodynamique")]
-        Thermodynamique,
+        [Description("Units related to heat and thermodynamics")]
+        [DisplayedName("Thermodynamics")]
+        Thermodynamics,
 
-        [Description("Unités liées aux fluides et écoulements")]
-        [DisplayName("Fluide")]
-        Fluidique,
+        [Description("Units related to fluids and flow")]
+        [DisplayedName("Fluidics")]
+        Fluidics,
 
-        [Description("Unités chimiques et de concentration")]
-        [DisplayName("Chimie")]
-        Chimie,
+        [Description("Chemical units and concentration")]
+        [DisplayedName("Chemistry")]
+        Chemistry,
 
-        [Description("Unités liées à la lumière et aux radiations")]
-        [DisplayName("Optique")]
-        Optique,
+        [Description("Units related to light and radiation")]
+        [DisplayedName("Optics")]
+        Optics,
 
-        [Description("Unités de coût et économiques")]
-        [DisplayName("Economique")]
-        Economique,
+        [Description("Economic and monetary units")]
+        [DisplayedName("Economics")]
+        Economics,
 
-        [Description("Unités informatiques et de données")]
-        [DisplayName("Informatique")]
-        Informatique,
+        [Description("Computing and data units")]
+        [DisplayedName("Computing")]
+        Computing,
 
-        [Description("Unités de transport et carburant")]
-        [DisplayName("Transport")]
+        [Description("Transportation and fuel units")]
+        [DisplayedName("Transport")]
         Transport,
 
-        [Description("Unités spéciales et sans dimension")]
-        [DisplayName("Spécial")]
+        [Description("Special units and dimensionless quantities")]
+        [DisplayedName("Special")]
         Special,
 
-        [Description("Domaine non défini")]
-        [DisplayName("Autres")]
-        NonDefini
+        [Description("Undefined domain")]
+        [DisplayedName("Undefined")]
+        Undefined,
+        Thermodynamique
     }
 }

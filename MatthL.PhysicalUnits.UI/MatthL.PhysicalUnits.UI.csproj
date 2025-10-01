@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net8.0-windows</TargetFramework>
@@ -6,6 +6,14 @@
     <UseWPF>true</UseWPF>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MatthL.WPF.Essentials" Version="0.9.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MatthL.PhysicalUnits.Core\MatthL.PhysicalUnits.Core.csproj" />
+  </ItemGroup>
 
   <ItemGroup>
     <Compile Update="ViewsButtons\PhysicalUnitEquationButton.xaml.cs">

@@ -1,12 +1,15 @@
-﻿using MatthL.PhysicalUnits.Enums;
+﻿using MatthL.PhysicalUnits.Core.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MatthL.PhysicalUnits.Enums
+namespace MatthL.PhysicalUnits.Core.Enums
 {
+    /// <summary>
+    /// Prefix linked to the unit for power of tens
+    /// </summary>
     public enum Prefix
     {
             yotta,

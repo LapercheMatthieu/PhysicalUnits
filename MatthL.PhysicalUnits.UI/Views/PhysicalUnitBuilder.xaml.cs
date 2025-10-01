@@ -1,10 +1,10 @@
-﻿using MatthL.PhysicalUnits.Models;
-using MatthL.PhysicalUnits.ViewModels;
+﻿using MatthL.PhysicalUnits.Core.Models;
+using MatthL.PhysicalUnits.UI.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace MatthL.PhysicalUnits.Views
+namespace MatthL.PhysicalUnits.UI.Views
 {
     /// <summary>
     /// Logique d'interaction pour PhysicalUnitBuilder.xaml

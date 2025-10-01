@@ -1,6 +1,6 @@
-﻿using MatthL.PhysicalUnits.Enums;
-using MatthL.PhysicalUnits.Models;
-using MatthL.PhysicalUnits.ViewModels;
+﻿using MatthL.PhysicalUnits.Core.Enums;
+using MatthL.PhysicalUnits.Core.Models;
+using MatthL.PhysicalUnits.UI.ViewModels;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -9,7 +9,7 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace MatthL.PhysicalUnits.Views
+namespace MatthL.PhysicalUnits.UI.Views
 {
     /// <summary>
     /// Vue simplifiée qui délègue toute la logique au ViewModel

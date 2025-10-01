@@ -1,5 +1,6 @@
-﻿using MatthL.PhysicalUnits.Models;
-using MatthL.PhysicalUnits.Tools;
+﻿using MatthL.PhysicalUnits.Core.DimensionFormulas;
+using MatthL.PhysicalUnits.Core.EquationModels;
+using MatthL.PhysicalUnits.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -9,7 +10,7 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace MatthL.PhysicalUnits.Views
+namespace MatthL.PhysicalUnits.UI.Views
 {
     /// <summary>
     /// Logique d'interaction pour PhysicalUnitEquationResultView.xaml

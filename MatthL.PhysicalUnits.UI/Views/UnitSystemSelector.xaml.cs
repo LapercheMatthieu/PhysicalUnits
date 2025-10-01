@@ -1,5 +1,5 @@
-﻿using MatthL.PhysicalUnits.Models;
-using MatthL.PhysicalUnits.Services;
+﻿using MatthL.PhysicalUnits.Core.Models;
+using MatthL.PhysicalUnits.Core.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace MatthL.PhysicalUnits.Views
+namespace MatthL.PhysicalUnits.UI.Views
 {
     /// <summary>
     /// Logique d'interaction pour UnitSystemSelector.xaml

@@ -1,13 +1,13 @@
-﻿using  PhysicalUnitManagement.Models;
-using  PhysicalUnitManagement.ViewsButtons;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using Fractions;
+using MatthL.PhysicalUnits.Core.EquationModels;
+using MatthL.PhysicalUnits.Core.Models;
 
-namespace  PhysicalUnitManager.Demo
+namespace MatthL.PhysicalUnits.Demo
 {
     /// <summary>
     /// Logique d'interaction pour PhysicalUnitDemoControl.xaml

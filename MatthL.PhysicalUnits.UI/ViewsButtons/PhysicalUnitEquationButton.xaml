@@ -1,13 +1,10 @@
-﻿<UserControl x:Class="MatthL.PhysicalUnits.ViewsButtons.PhysicalUnitEquationButton"
+﻿<UserControl x:Class="MatthL.PhysicalUnits.UI.ViewsButtons.PhysicalUnitEquationButton"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:MatthL.PhysicalUnits.Views"
-             xmlns:vm="clr-namespace:MatthL.PhysicalUnits.ViewModels"
-             xmlns:popups="clr-namespace:NexusAIO.Tools.StandardControls.Popups;assembly=Mechatro.WPF.UI.BaseControls"
-              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks" 
-
+             xmlns:local="clr-namespace:MatthL.PhysicalUnits.UI.Views"
+              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks" xmlns:popups="clr-namespace:MatthL.WPF.Essentials.SmartPopups;assembly=MatthL.WPF.Essentials.SmartPopups"
              mc:Ignorable="d" 
              d:DesignHeight="30" d:DesignWidth="200" x:Name="Root">
     <UserControl.Resources>
@@ -20,7 +17,7 @@
                           BlurRadius="5"/>
 
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/Mechatro.WPF.UI.Styles;component/StyleDictionary.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MatthL.WPF.Essentials.Styles;component/StyleDictionary.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>

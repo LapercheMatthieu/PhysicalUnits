@@ -1,6 +1,7 @@
 ﻿using MahApps.Metro.IconPacks;
-using MatthL.PhysicalUnits.Models;
-using MatthL.PhysicalUnits.Services;
+using MatthL.PhysicalUnits.Core.Enums;
+using MatthL.PhysicalUnits.Core.Models;
+using MatthL.PhysicalUnits.Core.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace MatthL.PhysicalUnits.ViewsButtons
+namespace MatthL.PhysicalUnits.UI.ViewsButtons
 {
     public enum UnitCategory
     {
@@ -102,10 +103,10 @@ namespace MatthL.PhysicalUnits.ViewsButtons
         {
             return new List<PhysicalUnit>
             {
-                StandardUnits.Second(Enums.Prefix.nano),
-                StandardUnits.Second(Enums.Prefix.micro),
-                StandardUnits.Second(Enums.Prefix.milli),
-                StandardUnits.Second(Enums.Prefix.SI),
+                StandardUnits.Second(Prefix.nano),
+                StandardUnits.Second(Prefix.micro),
+                StandardUnits.Second(Prefix.milli),
+                StandardUnits.Second(Prefix.SI),
                 StandardUnits.Minute,
                 StandardUnits.Hour,
                 StandardUnits.Day,
@@ -119,11 +120,11 @@ namespace MatthL.PhysicalUnits.ViewsButtons
         {
             return new List<PhysicalUnit>
             {
-                               StandardUnits.Ampere(Enums.Prefix.micro),
-                StandardUnits.Ampere(Enums.Prefix.milli),
+                               StandardUnits.Ampere(Prefix.micro),
+                StandardUnits.Ampere(Prefix.milli),
                 StandardUnits.Ampere(),
-                StandardUnits.Volt(Enums.Prefix.micro),
-                StandardUnits.Volt(Enums.Prefix.milli),
+                StandardUnits.Volt(Prefix.micro),
+                StandardUnits.Volt(Prefix.milli),
                 StandardUnits.Volt(),
             };
         }

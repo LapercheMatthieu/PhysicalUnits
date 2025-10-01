@@ -1,5 +1,6 @@
-﻿using MatthL.PhysicalUnits.Models;
-using MatthL.PhysicalUnits.Services;
+﻿using MatthL.PhysicalUnits.Core.Enums;
+using MatthL.PhysicalUnits.Core.Models;
+using MatthL.PhysicalUnits.Core.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,11 +16,11 @@ namespace MatthL.PhysicalUnits.ViewsButtons
         {
             var UnitList = new List<PhysicalUnit>()
             {
-                StandardUnits.Ampere(Enums.Prefix.micro),
-                StandardUnits.Ampere(Enums.Prefix.milli),
+                StandardUnits.Ampere(Prefix.micro),
+                StandardUnits.Ampere(Prefix.milli),
                 StandardUnits.Ampere(),
-                StandardUnits.Volt(Enums.Prefix.micro),
-                StandardUnits.Volt(Enums.Prefix.milli),
+                StandardUnits.Volt(Prefix.micro),
+                StandardUnits.Volt(Prefix.milli),
                 StandardUnits.Volt(),
             };
             ItemsSource = UnitList;

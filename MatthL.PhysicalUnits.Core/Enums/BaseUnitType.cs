@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MatthL.PhysicalUnits.Enums
+namespace MatthL.PhysicalUnits.Core.Enums
 {
     /// <summary>
     /// Physical base dimensions (7 SI + extensions)
@@ -28,5 +28,4 @@ namespace MatthL.PhysicalUnits.Enums
         Ratio                // %,
     }
 
-   
 }

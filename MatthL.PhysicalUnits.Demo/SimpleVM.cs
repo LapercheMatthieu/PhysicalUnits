@@ -1,15 +1,16 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using  PhysicalUnitManagement.Models;
-using  PhysicalUnitManagement.Services;
-using SQLiteManager.Authorizations;
-using SQLiteManager.Managers;
+using MatthL.PhysicalUnits.Core.EquationModels;
+using MatthL.PhysicalUnits.Core.Models;
+using MatthL.PhysicalUnits.Core.Services;
+using MatthL.SqliteEF.Core.Authorizations;
+using MatthL.SqliteEF.Core.Managers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace  PhysicalUnitManager.Demo
+namespace  MatthL.PhysicalUnits.Demo
 {
     public partial class SimpleVM : ObservableObject
     {
@@ -52,7 +53,7 @@ namespace  PhysicalUnitManager.Demo
         }
         private async void CreateDB()
         {
-            var sqlmanager = new SQLManager(new PhysicalUnitRootDBContext(), "C:\\Users\\Matthieu.Laperche\\Documents\\EssaiDB", "test", new AdminAuthorization());
+            var sqlmanager = new SQLManager(() => new PhysicalUnitRootDBContext(), "C:\\Users\\Matthieu.Laperche\\Documents\\EssaiDB", "test", new AdminAuthorization());
             var result = await sqlmanager.Create();
         }
 

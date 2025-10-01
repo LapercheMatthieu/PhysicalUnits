@@ -1,8 +1,8 @@
 ﻿using Fractions;
-using MatthL.PhysicalUnits.Enums;
-using MatthL.PhysicalUnits.Tools;
+using MatthL.PhysicalUnits.Core.Enums;
+using MatthL.PhysicalUnits.Core.Formulas;
+using MatthL.SqliteEF.Core.Models;
 using Microsoft.EntityFrameworkCore;
-using SQLiteManager.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MatthL.PhysicalUnits.Models
+namespace MatthL.PhysicalUnits.Core.Models
 {
     /// <summary>
     /// Représente une dimension physique pure avec son exposant

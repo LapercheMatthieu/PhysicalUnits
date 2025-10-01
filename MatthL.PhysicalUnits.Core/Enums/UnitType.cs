@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MatthL.PhysicalUnits.Enums
+namespace MatthL.PhysicalUnits.Core.Enums
 {
     /// <summary>
     /// Types d'unités physiques organisés par domaine
@@ -164,78 +164,5 @@ namespace MatthL.PhysicalUnits.Enums
         Unknown_Special,
     }
 
-    /// <summary>
-    /// Extensions pour faciliter l'utilisation de UnitType
-    /// </summary>
-    public static class UnitTypeExtensions
-    {
-        /// <summary>
-        /// Obtient le domaine d'un type d'unité
-        /// </summary>
-        public static PhysicalUnitDomain GetDomain(this UnitType unitType)
-        {
-            var parts = unitType.ToString().Split('_');
-            if (parts.Length < 2) return PhysicalUnitDomain.NonDefini;
-
-            return parts[1] switch
-            {
-                "Base" => PhysicalUnitDomain.DimensionsDeBase,
-                "Mech" => PhysicalUnitDomain.Mecanique,
-                "Fluid" => PhysicalUnitDomain.Fluidique,
-                "Thermo" => PhysicalUnitDomain.Thermodynamique,
-                "Elec" => PhysicalUnitDomain.Electricite,
-                "Chem" => PhysicalUnitDomain.Chimie,
-                "Optic" => PhysicalUnitDomain.Optique,
-                "Info" => PhysicalUnitDomain.Informatique,
-                "Transport" => PhysicalUnitDomain.Transport,
-                "Econ" => PhysicalUnitDomain.Economique,
-                "Special" => PhysicalUnitDomain.Special,
-                _ => PhysicalUnitDomain.NonDefini
-            };
-        }
-
-        /// <summary>
-        /// Obtient le nom court du type (sans le domaine)
-        /// </summary>
-        public static string GetShortName(this UnitType unitType)
-        {
-            var parts = unitType.ToString().Split('_');
-            var result = parts.Length > 0 ? parts[0] : unitType.ToString();
-
-            // Ajouter des espaces avant les majuscules (sauf la première)
-            return System.Text.RegularExpressions.Regex.Replace(
-                result,
-                "(?<!^)(?=[A-Z])",
-                " "
-            );
-        }
-
-        /// <summary>
-        /// Obtient tous les types d'un domaine spécifique
-        /// </summary>
-        public static IEnumerable<UnitType> GetTypesForDomain(PhysicalUnitDomain domain)
-        {
-            var domainSuffix = domain switch
-            {
-                PhysicalUnitDomain.DimensionsDeBase => "_Base",
-                PhysicalUnitDomain.Mecanique => "_Mech",
-                PhysicalUnitDomain.Fluidique => "_Fluid",
-                PhysicalUnitDomain.Thermodynamique => "_Thermo",
-                PhysicalUnitDomain.Electricite => "_Elec",
-                PhysicalUnitDomain.Chimie => "_Chem",
-                PhysicalUnitDomain.Optique => "_Optic",
-                PhysicalUnitDomain.Informatique => "_Info",
-                PhysicalUnitDomain.Transport => "_Transport",
-                PhysicalUnitDomain.Economique => "_Econ",
-                PhysicalUnitDomain.Special => "_Special",
-                _ => ""
-            };
-
-            if (string.IsNullOrEmpty(domainSuffix))
-                return Enumerable.Empty<UnitType>();
-
-            return Enum.GetValues<UnitType>()
-                .Where(t => t.ToString().EndsWith(domainSuffix));
-        }
-    }
+    
 }

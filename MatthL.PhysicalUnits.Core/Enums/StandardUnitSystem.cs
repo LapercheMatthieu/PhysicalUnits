@@ -1,43 +1,45 @@
-﻿using System;
+﻿using MatthL.PhysicalUnits.Core.EnumHelpers;
+using MatthL.PhysicalUnits.Core.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MatthL.PhysicalUnits.Enums
+namespace MatthL.PhysicalUnits.Core.Enums
 {
     /// <summary>
-    /// Type de standardisation d'une unité
+    /// Standardization system for physical units
     /// </summary>
     public enum StandardUnitSystem
     {
-        [Description("Système International d'unités")]
-        [DisplayName("SI")]
+        [Description("International System of Units")]
+        [DisplayedName("SI")]
         SI,
 
-        [Description("Système métrique (non-SI)")]
-        [DisplayName("Métrique")]
-        Metrique,
+        [Description("Metric system (non-SI)")]
+        [DisplayedName("Metric")]
+        Metric,
 
-        [Description("Système impérial britannique")]
-        [DisplayName("Impérial")]
+        [Description("British Imperial system")]
+        [DisplayedName("Imperial")]
         Imperial,
 
-        [Description("Système américain")]
-        [DisplayName("US")]
+        [Description("United States customary system")]
+        [DisplayedName("US")]
         US,
 
-        [Description("Unités astronomiques")]
-        [DisplayName("Astronomique")]
-        Astronomique,
+        [Description("Astronomical units")]
+        [DisplayedName("Astronomical")]
+        Astronomical,
 
-        [Description("Système mixte (mélange de plusieurs systèmes)")]
-        [DisplayName("Mixte")]
-        Mixte,
+        [Description("Mixed system (combination of multiple systems)")]
+        [DisplayedName("Mixed")]
+        Mixed,
 
-        [Description("Autres systèmes")]
-        [DisplayName("Autre")]
-        Autre
+        [Description("Other systems")]
+        [DisplayedName("Other")]
+        Other
     }
 }

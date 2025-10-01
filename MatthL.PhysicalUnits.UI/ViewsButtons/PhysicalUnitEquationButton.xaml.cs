@@ -1,11 +1,13 @@
-﻿using MatthL.PhysicalUnits.Models;
+﻿using MatthL.PhysicalUnits.Core.DimensionFormulas;
+using MatthL.PhysicalUnits.Core.EquationModels;
+using MatthL.PhysicalUnits.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace MatthL.PhysicalUnits.ViewsButtons
+namespace MatthL.PhysicalUnits.UI.ViewsButtons
 {
     /// <summary>
     /// Logique d'interaction pour PhysicalUnitEquationButton.xaml
@@ -186,7 +188,7 @@ namespace MatthL.PhysicalUnits.ViewsButtons
             }
             else if (EquationTerms?.Terms != null && EquationTerms.Terms.Any())
             {
-                var formula = Tools.DimensionalFormulaHelper.GetFormulaString(EquationTerms.Terms.ToArray());
+                var formula = DimensionalFormulaHelper.GetFormulaString(EquationTerms.Terms.ToArray());
                 UnitTooltip = $"Formule: {formula}";
             }
             else

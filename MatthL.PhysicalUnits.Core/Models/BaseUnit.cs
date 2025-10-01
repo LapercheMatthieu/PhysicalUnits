@@ -1,24 +1,24 @@
 ﻿using Fractions;
-using MatthL.PhysicalUnits.Enums;
-using MatthL.PhysicalUnits.Tools;
+using MatthL.PhysicalUnits.Core.Enums;
+using MatthL.SqliteEF.Core.Models;
 using Microsoft.EntityFrameworkCore;
-using SQLiteManager.Models;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using MatthL.PhysicalUnits.Core.EnumHelpers;
+using MatthL.PhysicalUnits.Core.Abstractions;
+using MatthL.PhysicalUnits.Core.Formulas;
 
-namespace MatthL.PhysicalUnits.Models
+namespace MatthL.PhysicalUnits.Core.Models
 {
     /// <summary>
-    /// Représente une unité de base (Newton, Meter, etc.) avec ses dimensions
-    /// Contient les RawUnits, le préfixe et les facteurs de conversion
+    /// Represent a base unit (Newton, meter etc...) with its dimensions
+    /// Content the rawunits, prefix, exponent and conversion factors 
     /// </summary>
-    public class BaseUnit : IBaseEntity
+    public class BaseUnit : IBaseEntity, IBaseUnit
     {
         [Key]
         public int Id { get; set; }
@@ -26,13 +26,15 @@ namespace MatthL.PhysicalUnits.Models
         public StandardUnitSystem UnitSystem { get; set; } //Metric
         public string Name { get; set; } // Newton
         public string Symbol { get; set; } = string.Empty; //Type N 
-        
-        public virtual ICollection<RawUnit> RawUnits { get; set; } = new List<RawUnit>(); //La composition élémentaire type kg m/s²
+        public virtual ICollection<RawUnit> RawUnits { get; set; } = new List<RawUnit>(); //The elementary composition kg m/s²
         public Prefix Prefix { get; set; } 
         public bool IsSI { get; set; }
+        public double Offset { get; set; } //for offset relations like Kelvin and degrees
+        public int PhysicalUnitId { get; set; }
+        [ForeignKey("PhysicalUnitId")] public PhysicalUnit PhysicalUnit { get; set; }
 
         #region EXPONENT
-        // Stockage des Fractions comme strings
+        // Exponent stored as a fraction
         public int Exponent_Numerator { get; set; } = 1;
         public int Exponent_Denominator { get; set; } = 1;
 
@@ -56,7 +58,7 @@ namespace MatthL.PhysicalUnits.Models
         #endregion
 
         #region ConversionFactor
-        // Stockage des Fractions comme strings
+        // Conversion factor as a fraction
         public string ConversionFactor_Numerator { get; set; } = "1";
         public string ConversionFactor_Denominator { get; set; } = "1";
 
@@ -74,46 +76,13 @@ namespace MatthL.PhysicalUnits.Models
         #endregion
 
 
-        /// <summary>
-        /// pour les échelles non proportionnelles
-        /// </summary>
-        public double Offset { get; set; }
+        [NotMapped] public PhysicalUnitDomain Domain => UnitType.GetDomain();
+        [NotMapped] public string DimensionalFormula => CalculateDimensionalFormula();
+        [NotMapped] public string PrefixedSymbol => Prefix.GetSymbol() + Symbol;
+        [NotMapped] public string PrefixedName => Prefix.GetName() + Name;
 
-
-        public int PhysicalUnitId { get; set; }
-
-        [ForeignKey("PhysicalUnitId")]
-        public PhysicalUnit PhysicalUnit { get; set; }
-
-        [NotMapped]
-        public PhysicalUnitDomain Domain => UnitType.GetDomain();
-
-        [NotMapped]
-        public string DimensionalFormula => CalculateDimensionalFormula();
-
-        [NotMapped]
-        public string PrefixedSymbol
-        {
-            get
-            {
-                return Prefix.GetSymbol() + Symbol;
-            }
-        }
-        [NotMapped]
-        public string PrefixedName
-        {
-            get
-            {
-                return Prefix.GetName() + Name;
-            }
-        }
-        /// <summary>
-        /// Constructeur par défaut
-        /// </summary>
         public BaseUnit() { }
-        /// <summary>
-        /// Constructeur de clonage
-        /// </summary>
+
         public static BaseUnit Clone(BaseUnit unit)
         {
             var cloned = new BaseUnit()
@@ -140,14 +109,7 @@ namespace MatthL.PhysicalUnits.Models
         }
 
         /// <summary>
-        /// Calcule la formule dimensionnelle
-        /// </summary>
-        private string CalculateDimensionalFormula()
-        {
-            return DimensionalFormulaHelper.GetFormulaString(this);
-        }
-        /// <summary>
-        /// Représentation textuelle
+        /// Textual Representation
         /// </summary>
         public override string ToString()
         {

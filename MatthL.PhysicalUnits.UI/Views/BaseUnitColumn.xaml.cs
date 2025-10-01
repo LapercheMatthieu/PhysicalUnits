@@ -1,10 +1,5 @@
-﻿using MatthL.PhysicalUnits.Models;
-using MatthL.PhysicalUnits.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using MatthL.PhysicalUnits.UI.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -15,7 +10,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace MatthL.PhysicalUnits.Views
+namespace MatthL.PhysicalUnits.UI.Views
 {
     /// <summary>
     /// Logique d'interaction pour BaseUnitColumn.xaml

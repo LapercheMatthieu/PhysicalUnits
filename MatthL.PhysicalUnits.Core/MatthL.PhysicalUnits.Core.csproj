@@ -16,12 +16,6 @@
 	  <IncludeReferencedProjects>true</IncludeReferencedProjects>
 	  
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Fractions" Version="8.3.2" />
-    <PackageReference Include=" UI" Version="1.0.10" />
-    <PackageReference Include="SQLiteManager" Version="1.0.3" />
-  </ItemGroup>
 	
 	<!-- Inclusion des DLLs des projets référencés dans le package NuGet -->
 	<PropertyGroup>
@@ -33,5 +27,10 @@
 			<BuildOutputInPackage Include="@(ReferenceCopyLocalPaths-&gt;WithMetadataValue('ReferenceSourceTarget', 'ProjectReference'))" />
 		</ItemGroup>
 	</Target>
+
+	<ItemGroup>
+	  <PackageReference Include="Fractions" Version="8.3.2" />
+	  <PackageReference Include="MatthL.SqliteEF" Version="0.9.0" />
+	</ItemGroup>
 </Project>
 

@@ -1,11 +1,8 @@
 ﻿
-using  PhysicalUnitManagement.Models;
-using  PhysicalUnitManagement.Services;
-using SQLiteManager.Authorizations;
-using SQLiteManager.Managers;
+using MatthL.PhysicalUnits.Core.Services;
 using System.Windows;
 
-namespace  PhysicalUnitManager.Demo
+namespace  MatthL.PhysicalUnits.Demo
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

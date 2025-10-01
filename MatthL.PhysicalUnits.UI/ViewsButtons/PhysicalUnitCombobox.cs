@@ -1,11 +1,11 @@
-﻿using MatthL.PhysicalUnits.Enums;
-using MatthL.PhysicalUnits.Models;
-using MatthL.PhysicalUnits.Services;
+﻿using MatthL.PhysicalUnits.Core.Enums;
+using MatthL.PhysicalUnits.Core.Models;
+using MatthL.PhysicalUnits.Core.Services;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Controls;
 
-namespace MatthL.PhysicalUnits.ViewsButtons
+namespace MatthL.PhysicalUnits.UI.ViewsButtons
 {
     public class PhysicalUnitCombobox : ComboBox
     {
