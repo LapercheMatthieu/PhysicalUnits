@@ -1,15 +1,9 @@
 ﻿using Fractions;
+using MatthL.PhysicalUnits.Core.EnumHelpers;
 using MatthL.PhysicalUnits.Core.Enums;
 using MatthL.PhysicalUnits.Core.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
-
-namespace MatthL.PhysicalUnits.Core.Services
+namespace MatthL.PhysicalUnits.Infrastructure.Library
 {
     /// <summary>
     /// Factory pour créer facilement les unités physiques

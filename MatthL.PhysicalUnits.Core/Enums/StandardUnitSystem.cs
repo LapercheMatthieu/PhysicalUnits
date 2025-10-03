@@ -1,11 +1,5 @@
 ﻿using MatthL.PhysicalUnits.Core.EnumHelpers;
-using MatthL.PhysicalUnits.Core.Enums;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MatthL.PhysicalUnits.Core.Enums
 {

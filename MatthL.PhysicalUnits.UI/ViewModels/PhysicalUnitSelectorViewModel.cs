@@ -2,26 +2,22 @@
 using CommunityToolkit.Mvvm.Input;
 using MatthL.PhysicalUnits.Core.Enums;
 using MatthL.PhysicalUnits.Core.Models;
-using MatthL.PhysicalUnits.Core.Services;
-using System;
-using System.Collections.Generic;
+using MatthL.PhysicalUnits.DimensionalFormulas.Extensions;
+using MatthL.PhysicalUnits.Infrastructure.Repositories;
 using System.Collections.ObjectModel;
-using System.DirectoryServices;
-using System.Linq;
-using System.Windows.Controls;
 
 namespace MatthL.PhysicalUnits.UI.ViewModels
 {
     public partial class PhysicalUnitSelectorViewModel : ObservableObject
     {
-
         #region CONVERTING REGION
+
         [ObservableProperty] private bool _IsConverting;
         [ObservableProperty] private PhysicalUnit _UnitToConvert;
 
         partial void OnUnitToConvertChanged(PhysicalUnit value)
         {
-            if(value != null)
+            if (value != null)
             {
                 GetCompatibleUnits();
             }
@@ -31,7 +27,7 @@ namespace MatthL.PhysicalUnits.UI.ViewModels
         {
             IsSearching = true;
             SearchResults.Clear();
-            var results = PhysicalUnitStorage.GetUnitsFromDimensionalFormula(UnitToConvert.DimensionalFormula);
+            var results = RepositorySearchEngine.GetUnitsFromDimensionalFormula(UnitToConvert.GetDimensionalFormula());
             foreach (var unit in results)
             {
                 SearchResults.Add(unit);
@@ -39,8 +35,11 @@ namespace MatthL.PhysicalUnits.UI.ViewModels
             IsInBuilding = false;
             OnPropertyChanged(nameof(AvailableUnits));
         }
-        #endregion
+
+        #endregion CONVERTING REGION
+
         #region Search Region
+
         [ObservableProperty]
         private string _searchText;
 
@@ -61,7 +60,7 @@ namespace MatthL.PhysicalUnits.UI.ViewModels
                 }
                 else
                 {
-                    PerformSearch(value, UnitToConvert.DimensionalFormula);
+                    PerformSearch(value, UnitToConvert.GetDimensionalFormula());
                 }
                 return;
             }
@@ -86,12 +85,13 @@ namespace MatthL.PhysicalUnits.UI.ViewModels
             if (string.IsNullOrWhiteSpace(searchText))
                 return;
 
-            var results = PhysicalUnitStorage.SearchUnits(searchText);
+            var results = RepositorySearchEngine.SearchUnits(searchText);
             foreach (var unit in results)
             {
                 SearchResults.Add(unit);
             }
         }
+
         private void PerformSearch(string searchText, string formula)
         {
             SearchResults.Clear();
@@ -99,16 +99,18 @@ namespace MatthL.PhysicalUnits.UI.ViewModels
             if (string.IsNullOrWhiteSpace(searchText))
                 return;
 
-            var results = PhysicalUnitStorage.SearchUnits(searchText, formula);
+            var results = RepositorySearchEngine.SearchUnits(searchText, formula);
             foreach (var unit in results)
             {
                 SearchResults.Add(unit);
             }
         }
-        #endregion
+
+        #endregion Search Region
 
         #region Categories
-        public IEnumerable<PhysicalUnitDomain> AvailableCategories => PhysicalUnitStorage.GetDomains();
+
+        public IEnumerable<PhysicalUnitDomain> AvailableCategories => RepositorySearchEngine.GetDomains();
 
         [ObservableProperty]
         private PhysicalUnitDomain? _selectedCategory;
@@ -119,10 +121,12 @@ namespace MatthL.PhysicalUnits.UI.ViewModels
             OnPropertyChanged(nameof(AvailableUnits));
             SelectedUnitType = null;
         }
-        #endregion
+
+        #endregion Categories
 
         #region Unit Types
-        public List<UnitType> AvailableUnitTypes => PhysicalUnitStorage.GetUnitTypesForDomain(SelectedCategory);
+
+        public List<UnitType> AvailableUnitTypes => RepositorySearchEngine.GetUnitTypesForDomain(SelectedCategory);
 
         [ObservableProperty]
         private UnitType? _selectedUnitType;
@@ -132,9 +136,11 @@ namespace MatthL.PhysicalUnits.UI.ViewModels
             OnPropertyChanged(nameof(AvailableUnits));
             SelectedUnitName = null;
         }
-        #endregion
+
+        #endregion Unit Types
 
         #region Available Units
+
         public ObservableCollection<PhysicalUnit> AvailableUnits
         {
             get
@@ -144,7 +150,7 @@ namespace MatthL.PhysicalUnits.UI.ViewModels
                     return SearchResults;
                 }
                 return new ObservableCollection<PhysicalUnit>(
-                    PhysicalUnitStorage.GetUnits(domain: SelectedCategory, unitType: SelectedUnitType));
+                    RepositorySearchEngine.GetUnits(domain: SelectedCategory, unitType: SelectedUnitType));
             }
         }
 
@@ -161,9 +167,11 @@ namespace MatthL.PhysicalUnits.UI.ViewModels
                 SelectedUnitViewModel = new PhysicalUnitViewModel(value);
             }
         }
-        #endregion
+
+        #endregion Available Units
 
         #region Building Mode
+
         [ObservableProperty]
         private bool _isInBuilding;
 
@@ -187,9 +195,11 @@ namespace MatthL.PhysicalUnits.UI.ViewModels
                 SelectedUnitViewModel.CanEdit = value;
             }
         }
-        #endregion
+
+        #endregion Building Mode
 
         #region Selected Unit Management
+
         [ObservableProperty]
         private PhysicalUnit _selectedUnit;
 
@@ -199,7 +209,7 @@ namespace MatthL.PhysicalUnits.UI.ViewModels
         partial void OnSelectedUnitViewModelChanged(PhysicalUnitViewModel value)
         {
             SelectedUnit = value?.Model;
-            
+
             // S'assurer que CanEdit est correctement défini
             if (value != null)
             {
@@ -210,30 +220,39 @@ namespace MatthL.PhysicalUnits.UI.ViewModels
             SelectedUnitChanged?.Invoke(this, SelectedUnit);
             GotModified?.Invoke();
         }
+
         public event Action GotModified;
+
         private void Value_GotModified()
         {
             OnPropertyChanged(nameof(SelectedUnit));
             GotModified?.Invoke();
         }
-        #endregion
+
+        #endregion Selected Unit Management
 
         #region Events
+
         public event EventHandler<PhysicalUnit> SelectedUnitChanged;
-        #endregion
+
+        #endregion Events
 
         #region Constructor
+
         public PhysicalUnitSelectorViewModel()
         {
-            PhysicalUnitStorage.Initialize();
+            PhysicalUnitRepository.Initialize();
         }
+
         public PhysicalUnitSelectorViewModel(PhysicalUnit UnitToConvert)
         {
-            PhysicalUnitStorage.Initialize();
+            PhysicalUnitRepository.Initialize();
         }
-        #endregion
+
+        #endregion Constructor
 
         #region Commands
+
         [RelayCommand]
         private void ClearSelection()
         {
@@ -271,6 +290,7 @@ namespace MatthL.PhysicalUnits.UI.ViewModels
                 SelectedUnitViewModel.RemoveBaseUnit(baseUnit);
             }
         }
-        #endregion
+
+        #endregion Commands
     }
 }

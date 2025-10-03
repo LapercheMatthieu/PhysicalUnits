@@ -1,34 +1,30 @@
 ﻿using Fractions;
+using MatthL.PhysicalUnits.Core.EnumHelpers;
 using MatthL.PhysicalUnits.Core.Enums;
-using MatthL.PhysicalUnits.Core.Formulas;
+using MatthL.PhysicalUnits.Core.Tools;
 using MatthL.SqliteEF.Core.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MatthL.PhysicalUnits.Core.Models
 {
     /// <summary>
-    /// Représente une dimension physique pure avec son exposant
+    /// Represent a pure PhysicalDimension with its exponent
     /// Ex: Length^1, Time^-2
     /// </summary>
     public class RawUnit : IBaseEntity
     {
         [Key]
         public int Id { get; set; }
+
         public BaseUnitType UnitType { get; set; } // Type de dimension de base (length, mass, time, etc.)
 
-
         #region EXPONENT
+
         // Stockage des Fractions comme int
         public int Exponent_Numerator { get; set; } = 1;
         public int Exponent_Denominator { get; set; } = 1;
-
         [NotMapped]
         public Fraction Exponent
         {
@@ -46,54 +42,28 @@ namespace MatthL.PhysicalUnits.Core.Models
             }
         }
 
-        #endregion
+        #endregion EXPONENT
 
-        // PROPRIETE CALCULEES !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-        [NotMapped]
-        public string Symbol
-        {
-            get
-            {
-                return EquationToStringHelper.GetBaseSymbol(UnitType);
-            }
-        }
-
-        // LIENS EF !!!!!!!!!!!!!!!!!!!!!!!!!!!
+        [NotMapped] public string Symbol => UnitType.GetBaseSymbol();
 
         public int BaseUnitId { get; set; }
+
         [ForeignKey("BaseUnitId")]
         public BaseUnit BaseUnit { get; set; }
 
-        // CONSTRUCTEUR !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-
-        /// <summary>
-        /// Constructeur par défaut
-        /// </summary>
-        public RawUnit() { }
-
-        /// <summary>
-        /// Constructeur avec paramètres
-        /// </summary>
+        public RawUnit()     { }
         public RawUnit(BaseUnitType unitType, int exponent)
         {
             UnitType = unitType;
             Exponent = exponent;
         }
+
         public RawUnit(BaseUnitType unitType, Fraction exponent)
         {
             UnitType = unitType;
             Exponent = exponent;
         }
-        public static RawUnit Clone(RawUnit copiedUnit)
-        {
-            return new RawUnit()
-            {
-                UnitType = copiedUnit.UnitType,
-                Exponent = copiedUnit.Exponent,
-            };
-        }
+
         public RawUnit Power(Fraction PowerOf)
         {
             return new RawUnit(UnitType, Exponent * PowerOf);
@@ -137,10 +107,9 @@ namespace MatthL.PhysicalUnits.Core.Models
 
                 // Relation avec Sensors (Many-to-Many)
                 builder.HasOne(e => e.BaseUnit)
-                                .WithMany(b=>b.RawUnits)
+                                .WithMany(b => b.RawUnits)
                                 .HasForeignKey(e => e.BaseUnitId)
                                 .OnDelete(DeleteBehavior.Cascade);
-
             });
         }
     }

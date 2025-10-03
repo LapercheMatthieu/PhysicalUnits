@@ -1,13 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using MatthL.PhysicalUnits.Core.Enums;
 using MatthL.PhysicalUnits.Core.Models;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+using MatthL.PhysicalUnits.DimensionalFormulas.Extensions;
 
 namespace MatthL.PhysicalUnits.UI.ViewModels
 {
@@ -17,7 +11,9 @@ namespace MatthL.PhysicalUnits.UI.ViewModels
     public partial class BaseUnitViewModel : ObservableObject
     {
         public event Action<BaseUnitViewModel> AskDeletion;
+
         public event Action<BaseUnitViewModel> GotModified;
+
         private readonly BaseUnit _model;
 
         [ObservableProperty]
@@ -71,7 +67,8 @@ namespace MatthL.PhysicalUnits.UI.ViewModels
         public double Offset => _model.Offset;
 
         // Propriétés calculées du modèle
-        public string DimensionalFormula => _model.DimensionalFormula;
+        public string DimensionalFormula => _model.GetDimensionalFormula();
+
         public string PrefixedSymbol => _model.PrefixedSymbol;
         public string PrefixedName => _model.PrefixedName;
         public string ConversionFactor => _model.ConversionFactor.ToString();
@@ -94,7 +91,6 @@ namespace MatthL.PhysicalUnits.UI.ViewModels
             }
         }
 
-
         /// <summary>
         /// Met à jour toutes les propriétés d'affichage
         /// </summary>
@@ -107,6 +103,5 @@ namespace MatthL.PhysicalUnits.UI.ViewModels
         {
             AskDeletion?.Invoke(this);
         }
-
     }
 }

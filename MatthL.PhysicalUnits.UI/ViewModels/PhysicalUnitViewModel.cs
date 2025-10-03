@@ -1,10 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using MatthL.PhysicalUnits.Core.EnumHelpers;
 using MatthL.PhysicalUnits.Core.Enums;
 using MatthL.PhysicalUnits.Core.Models;
-using System;
+using MatthL.PhysicalUnits.DimensionalFormulas.Extensions;
+using MatthL.PhysicalUnits.Infrastructure.Extensions;
 using System.Collections.ObjectModel;
-using System.Linq;
-using MatthL.PhysicalUnits.Core.EnumHelpers;
 
 namespace MatthL.PhysicalUnits.UI.ViewModels
 {
@@ -14,6 +14,7 @@ namespace MatthL.PhysicalUnits.UI.ViewModels
     public partial class PhysicalUnitViewModel : ObservableObject
     {
         private readonly PhysicalUnit _model;
+
         public event Action GotModified;
 
         [ObservableProperty]
@@ -29,8 +30,10 @@ namespace MatthL.PhysicalUnits.UI.ViewModels
 
         // Propriétés calculées du modèle
         public string Name => _model.Name;
+
         public string Symbol => _model.ToString();
         public bool IsSI => _model.IsSI;
+
         public PhysicalUnit SIUnit
         {
             get
@@ -38,8 +41,9 @@ namespace MatthL.PhysicalUnits.UI.ViewModels
                 return _model.GetSIUnit();
             }
         }
+
         public StandardUnitSystem UnitSystem => _model.UnitSystem;
-        public string DimensionalFormula => _model.DimensionalFormula;
+        public string DimensionalFormula => _model.GetDimensionalFormula();
 
         // Propriété éditable
         public UnitType UnitType
@@ -54,6 +58,7 @@ namespace MatthL.PhysicalUnits.UI.ViewModels
                 }
             }
         }
+
         public string UnitTypeName
         {
             get
@@ -64,7 +69,7 @@ namespace MatthL.PhysicalUnits.UI.ViewModels
 
         public PhysicalUnitViewModel(PhysicalUnit model)
         {
-            _model = PhysicalUnit.Clone(model) ?? throw new ArgumentNullException(nameof(model));
+            _model = model.Clone() ?? throw new ArgumentNullException(nameof(model));
             _baseUnitViewModels = new ObservableCollection<BaseUnitViewModel>();
             SyncBaseUnits();
         }
@@ -121,7 +126,7 @@ namespace MatthL.PhysicalUnits.UI.ViewModels
         /// </summary>
         public void AddBaseUnit(BaseUnit baseUnit)
         {
-            var newUnit = BaseUnit.Clone(baseUnit);
+            var newUnit = baseUnit.Clone();
             _model.BaseUnits.Add(newUnit);
 
             var vm = new BaseUnitViewModel(newUnit);
@@ -129,7 +134,6 @@ namespace MatthL.PhysicalUnits.UI.ViewModels
             vm.AskDeletion += Vm_AskDeletion;
             vm.GotModified += Vm_GotModified;
             _baseUnitViewModels.Add(vm);
-
 
             RefreshCalculatedProperties();
         }

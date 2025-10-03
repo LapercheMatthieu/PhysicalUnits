@@ -1,13 +1,11 @@
-﻿
-    using MatthL.PhysicalUnits.Core.Enums;
-    using System;
-    using System.Collections.Generic;
+﻿using MatthL.PhysicalUnits.Core.Enums;
+
 namespace MatthL.PhysicalUnits.Core.EnumHelpers
 {
-    // Cette classe contient toutes les informations liées aux préfixes SI
+    // This class contain all informations about prefixes
     public static class PrefixHelper
     {
-        // Structure pour contenir les infos de chaque préfixe
+        // Structure for the informations
         public class PrefixInfo
         {
             public string Symbol { get; }
@@ -22,7 +20,7 @@ namespace MatthL.PhysicalUnits.Core.EnumHelpers
             }
         }
 
-        // Dictionnaire principal qui associe chaque Prefix à ses informations
+        // Principal dictionary that attributes the informations to the prefix
         private static readonly Dictionary<Prefix, PrefixInfo> PrefixData = new Dictionary<Prefix, PrefixInfo>
     {
         { Prefix.yotta, new PrefixInfo("Y", "yotta", 1e+24m) },
@@ -48,11 +46,12 @@ namespace MatthL.PhysicalUnits.Core.EnumHelpers
         { Prefix.yocto, new PrefixInfo("y", "yocto", 1e-24m) }
     };
 
-        // Dictionnaires secondaires pour les recherches inversées
+        // Secondary dictionaries for quick research
         private static readonly Dictionary<string, Prefix> SymbolToPrefix = new Dictionary<string, Prefix>(StringComparer.OrdinalIgnoreCase);
+
         private static readonly Dictionary<string, Prefix> NameToPrefix = new Dictionary<string, Prefix>(StringComparer.OrdinalIgnoreCase);
 
-        // Initialisation des dictionnaires secondaires
+        // Initialization of secondary Dictionaries
         static PrefixHelper()
         {
             foreach (var kvp in PrefixData)
@@ -65,7 +64,7 @@ namespace MatthL.PhysicalUnits.Core.EnumHelpers
             }
         }
 
-        // Méthodes d'accès aux données
+        // Data access
         public static PrefixInfo GetInfo(Prefix Prefix)
         {
             return PrefixData.TryGetValue(Prefix, out var info) ? info : null;
@@ -150,9 +149,4 @@ namespace MatthL.PhysicalUnits.Core.EnumHelpers
     }
 
     // Extensions d'enum pour une syntaxe plus fluide
- 
-
-    
 }
-
-

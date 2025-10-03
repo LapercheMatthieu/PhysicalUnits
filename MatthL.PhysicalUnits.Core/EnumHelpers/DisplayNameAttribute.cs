@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MatthL.PhysicalUnits.Core.EnumHelpers
+﻿namespace MatthL.PhysicalUnits.Core.EnumHelpers
 {
     /// <summary>
     /// Attribut to specify a display name for the enums

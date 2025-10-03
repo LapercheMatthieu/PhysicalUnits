@@ -1,19 +1,6 @@
-﻿using MatthL.PhysicalUnits.Core.Models;
-using MatthL.PhysicalUnits.Core.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MatthL.PhysicalUnits.Infrastructure.Repositories;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace MatthL.PhysicalUnits.UI.Views
 {
@@ -37,42 +24,45 @@ namespace MatthL.PhysicalUnits.UI.Views
                 typeof(UnitSystemSelector),
                 new PropertyMetadata(false));
 
-
         public bool IsPopupOpen
         {
             get { return (bool)GetValue(IsPopupOpenProperty); }
             set { SetValue(IsPopupOpenProperty, value); }
         }
+
         private void UnitButton_Click(object sender, RoutedEventArgs e)
         {
-            
-                IsPopupOpen = true;
+            IsPopupOpen = true;
         }
 
         public bool ShowMetrics
         {
-            get { return PhysicalUnitStorage.ShowMetrics; }
-            set { PhysicalUnitStorage.ShowMetrics = value;}
+            get { return PhysicalUnitRepository.Settings.ShowMetrics; }
+            set { PhysicalUnitRepository.Settings.ShowMetrics = value; }
         }
+
         public bool ShowImperial
         {
-            get { return PhysicalUnitStorage.ShowImperial; }
-            set { PhysicalUnitStorage.ShowImperial = value; }
+            get { return PhysicalUnitRepository.Settings.ShowImperial; }
+            set { PhysicalUnitRepository.Settings.ShowImperial = value; }
         }
+
         public bool ShowUS
         {
-            get { return PhysicalUnitStorage.ShowUS; }
-            set { PhysicalUnitStorage.ShowUS = value; }
+            get { return PhysicalUnitRepository.Settings.ShowUS; }
+            set { PhysicalUnitRepository.Settings.ShowUS = value; }
         }
+
         public bool ShowAstronomic
         {
-            get { return PhysicalUnitStorage.ShowAstronomic; }
-            set { PhysicalUnitStorage.ShowAstronomic = value; }
+            get { return PhysicalUnitRepository.Settings.ShowAstronomic; }
+            set { PhysicalUnitRepository.Settings.ShowAstronomic = value; }
         }
+
         public bool ShowOther
         {
-            get { return PhysicalUnitStorage.ShowOther; }
-            set { PhysicalUnitStorage.ShowOther = value; }
+            get { return PhysicalUnitRepository.Settings.ShowOther; }
+            set { PhysicalUnitRepository.Settings.ShowOther = value; }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

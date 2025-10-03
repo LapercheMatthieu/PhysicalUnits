@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MatthL.PhysicalUnits.Core.Enums
+﻿namespace MatthL.PhysicalUnits.Core.Enums
 {
     /// <summary>
     /// Physical base dimensions (7 SI + extensions)
@@ -14,6 +7,7 @@ namespace MatthL.PhysicalUnits.Core.Enums
     {
         // The 7 base ones
         Length,              // m
+
         Mass,                // kg
         Time,                // s
         ElectricCurrent,     // A
@@ -22,10 +16,10 @@ namespace MatthL.PhysicalUnits.Core.Enums
         LuminousIntensity,   // cd
 
         // Extensions for code
-        Angle,               // rad 
+        Angle,               // rad
+
         Currency,            // $, €, etc.
         Information,         // bit, byte
         Ratio                // %,
     }
-
 }

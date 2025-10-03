@@ -1,16 +1,13 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using MatthL.PhysicalUnits.Core.EquationModels;
 using MatthL.PhysicalUnits.Core.Models;
-using MatthL.PhysicalUnits.Core.Services;
+using MatthL.PhysicalUnits.DimensionalFormulas.Extensions;
+using MatthL.PhysicalUnits.Infrastructure.Extensions;
+using MatthL.PhysicalUnits.Infrastructure.Repositories;
 using MatthL.SqliteEF.Core.Authorizations;
 using MatthL.SqliteEF.Core.Managers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace  MatthL.PhysicalUnits.Demo
+namespace MatthL.PhysicalUnits.Demo
 {
     public partial class SimpleVM : ObservableObject
     {
@@ -32,25 +29,26 @@ namespace  MatthL.PhysicalUnits.Demo
             // Initialiser avec une instance vide
             MyEquationTerms = new EquationTerms();
 
-            var allPhysicalValues = PhysicalUnitStorage.GetAllUnits();
+            var allPhysicalValues = RepositorySearchEngine.GetAllUnits();
             var notWorking = new List<PhysicalUnit>();
             var notWorking2 = new List<PhysicalUnit>();
             foreach (var unit in allPhysicalValues)
             {
-                if(unit.GetSIUnit().ToString() == "SI")
+                if (unit.GetSIUnit().ToString() == "SI")
                 {
                     notWorking.Add(unit);
                 }
             }
             foreach (var unit in allPhysicalValues)
             {
-                if (unit.GetSIUnit().DimensionalFormula != unit.DimensionalFormula)
+                if (unit.GetSIUnit().GetDimensionalFormula() != unit.GetDimensionalFormula())
                 {
                     notWorking2.Add(unit);
                 }
             }
             var test = "";
         }
+
         private async void CreateDB()
         {
             var sqlmanager = new SQLManager(() => new PhysicalUnitRootDBContext(), "C:\\Users\\Matthieu.Laperche\\Documents\\EssaiDB", "test", new AdminAuthorization());

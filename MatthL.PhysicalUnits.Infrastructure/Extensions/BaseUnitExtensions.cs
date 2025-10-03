@@ -1,9 +1,5 @@
 ﻿using MatthL.PhysicalUnits.Core.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using MatthL.PhysicalUnits.Core.Models;
 
 namespace MatthL.PhysicalUnits.Infrastructure.Extensions
 {
@@ -11,7 +7,7 @@ namespace MatthL.PhysicalUnits.Infrastructure.Extensions
     {
         public static BaseUnit Clone(this BaseUnit unit)
         {
-            return new BaseUnit()
+            var cloned = new BaseUnit()
             {
                 ConversionFactor = unit.ConversionFactor,
                 Exponent = unit.Exponent,
@@ -20,11 +16,18 @@ namespace MatthL.PhysicalUnits.Infrastructure.Extensions
                 Offset = unit.Offset,
                 Prefix = unit.Prefix,
                 Symbol = unit.Symbol,
-                RawUnits = unit.RawUnits,
                 UnitSystem = unit.UnitSystem,
                 UnitType = unit.UnitType,
-                PhysicalUnit = unit.PhysicalUnit,
+                // Ne pas copier PhysicalUnit et PhysicalUnitId pour éviter les références circulaires
             };
+
+            // Cloner les RawUnits
+            foreach (var rawUnit in unit.RawUnits)
+            {
+                cloned.RawUnits.Add(rawUnit.Clone());
+            }
+
+            return cloned;
         }
 
         public static BaseUnit AddPrefix(this BaseUnit unit, Prefix Prefix)
@@ -33,6 +36,5 @@ namespace MatthL.PhysicalUnits.Infrastructure.Extensions
             newBase.Prefix = Prefix;
             return newBase;
         }
-
     }
 }

@@ -1,10 +1,6 @@
-﻿using MatthL.PhysicalUnits.Core.Enums;
-using System;
-using System.Collections.Generic;
+﻿using MatthL.PhysicalUnits.Core.EnumHelpers;
+using MatthL.PhysicalUnits.Core.Enums;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
 
 namespace MatthL.PhysicalUnits.UI.Converters

@@ -1,16 +1,13 @@
 ﻿using MatthL.PhysicalUnits.Core.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MatthL.PhysicalUnits.Core.EnumHelpers
 {
     public static class PrefixExtensions
     {
         public static string GetSymbol(this Prefix Prefix) => PrefixHelper.GetSymbol(Prefix);
+
         public static string GetName(this Prefix Prefix) => PrefixHelper.GetName(Prefix);
+
         public static decimal GetSize(this Prefix Prefix) => PrefixHelper.GetSize(Prefix);
 
         public static decimal ConvertTo(this decimal value, Prefix fromPrefix, Prefix toPrefix)

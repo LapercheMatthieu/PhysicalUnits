@@ -1,11 +1,6 @@
 ﻿using MatthL.PhysicalUnits.Core.Enums;
 using MatthL.PhysicalUnits.Core.Models;
-using MatthL.PhysicalUnits.Core.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using MatthL.PhysicalUnits.Infrastructure.Library;
 using System.Windows.Controls;
 
 namespace MatthL.PhysicalUnits.ViewsButtons
@@ -25,7 +20,6 @@ namespace MatthL.PhysicalUnits.ViewsButtons
             };
             ItemsSource = UnitList;
             DisplayMemberPath = "ToString";
-
         }
     }
 }

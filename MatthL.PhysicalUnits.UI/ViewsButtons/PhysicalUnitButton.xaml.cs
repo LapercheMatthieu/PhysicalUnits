@@ -1,7 +1,6 @@
 ﻿using MatthL.PhysicalUnits.Core.Models;
+using MatthL.PhysicalUnits.DimensionalFormulas.Extensions;
 using MatthL.PhysicalUnits.UI.ViewModels;
-using MatthL.PhysicalUnits.UI.Views;
-using System;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -13,6 +12,7 @@ namespace MatthL.PhysicalUnits.UI.ViewsButtons
     public partial class PhysicalUnitButton : UserControl
     {
         #region Dependency Properties
+
         public static readonly DependencyProperty SelectedUnitProperty =
             DependencyProperty.Register(
                 "SelectedUnit",
@@ -49,6 +49,7 @@ namespace MatthL.PhysicalUnits.UI.ViewsButtons
                 typeof(bool),
                 typeof(PhysicalUnitButton),
                 new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
         public PhysicalUnit UnitToConvert
         {
             get => (PhysicalUnit)GetValue(UnitToConvertProperty);
@@ -60,9 +61,11 @@ namespace MatthL.PhysicalUnits.UI.ViewsButtons
             get => (bool)GetValue(IsOnlyConvertionProperty);
             set => SetValue(IsOnlyConvertionProperty, value);
         }
-        #endregion
+
+        #endregion Dependency Properties
 
         #region Properties
+
         /// <summary>
         /// Unité sélectionnée
         /// </summary>
@@ -89,7 +92,8 @@ namespace MatthL.PhysicalUnits.UI.ViewsButtons
             get { return (string)GetValue(UnitTooltipProperty); }
             set { SetValue(UnitTooltipProperty, value); }
         }
-        #endregion
+
+        #endregion Properties
 
         private PhysicalUnitSelectorViewModel _internalViewModel;
 
@@ -150,7 +154,7 @@ namespace MatthL.PhysicalUnits.UI.ViewsButtons
         {
             if (SelectedUnit != null)
             {
-                UnitTooltip = $"{SelectedUnit.Name} ({SelectedUnit.DimensionalFormula})";
+                UnitTooltip = $"{SelectedUnit.Name} ({SelectedUnit.GetDimensionalFormula()})";
             }
             else
             {

@@ -1,11 +1,4 @@
-﻿using MatthL.PhysicalUnits.Core.Enums;
-using MatthL.PhysicalUnits.Core.Models;
-using MatthL.PhysicalUnits.UI.ViewModels;
-using System;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
+﻿using MatthL.PhysicalUnits.UI.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -32,7 +25,7 @@ namespace MatthL.PhysicalUnits.UI.Views
                 typeof(PhysicalUnitModifierView),
                 new PropertyMetadata(false));
 
-        #endregion
+        #endregion Dependency Properties
 
         #region Properties
 
@@ -48,7 +41,7 @@ namespace MatthL.PhysicalUnits.UI.Views
             set => SetValue(IsEditingProperty, value);
         }
 
-        #endregion
+        #endregion Properties
 
         public PhysicalUnitModifierView()
         {

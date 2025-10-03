@@ -1,37 +1,29 @@
-﻿
-using MatthL.PhysicalUnits.Core.Abstractions;
-using MatthL.PhysicalUnits.Core.DimensionFormulas;
+﻿using MatthL.PhysicalUnits.Core.Abstractions;
 using MatthL.PhysicalUnits.Core.Enums;
+using MatthL.PhysicalUnits.Core.EquationModels;
+using MatthL.PhysicalUnits.Core.Models.Helpers;
 using MatthL.SqliteEF.Core.Models;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Runtime.InteropServices;
 
 namespace MatthL.PhysicalUnits.Core.Models
 {
     /// <summary>
-    /// Représente une unité physique 
+    /// Représente une unité physique
     /// Contient une liste de BaseUnits avec leurs exposants
     /// </summary>
     public class PhysicalUnit : IBaseEntity, IBaseUnit
     {
         [Key]
         public int Id { get; set; }
+
         public virtual ICollection<BaseUnit> BaseUnits { get; set; } = new List<BaseUnit>();
         public UnitType UnitType { get; set; } = UnitType.Unknown_Special;
 
-        [NotMapped]
-        public string Name
-        {
-            get
-            {
-                return PhysicalUnitNameHelper.GetPhysicalUnitName(this);
-            }
-        }
-       
-        [NotMapped]
-        public bool IsSI => BaseUnits.All(b => b.IsSI);
+        [NotMapped] public string Name => PhysicalUnitNameHelper.GetPhysicalUnitName(this);
+
+        [NotMapped] public bool IsSI => BaseUnits.All(b => b.IsSI);
 
         [NotMapped]
         public StandardUnitSystem UnitSystem
@@ -43,51 +35,30 @@ namespace MatthL.PhysicalUnits.Core.Models
                 return StandardUnitSystem.Mixed;
             }
         }
-        [NotMapped]
-        public string DimensionalFormula => CalculateDimensionalFormula();
 
-        public PhysicalUnit() { }
+        public PhysicalUnit(){ }
 
         public PhysicalUnit(BaseUnit baseUnit)
         {
             BaseUnits.Add(baseUnit);
             UnitType = baseUnit.UnitType;
         }
+
         public PhysicalUnit(PhysicalUnit CopyUnit)
         {
             if (CopyUnit == null) return;
             UnitType = CopyUnit.UnitType;
-            if(CopyUnit != null && CopyUnit.BaseUnits != null)
+            if (CopyUnit != null && CopyUnit.BaseUnits != null)
             {
                 BaseUnits = CopyUnit.BaseUnits;
             }
-            
         }
+
         public PhysicalUnit(PhysicalUnit CopyUnit, Prefix prefix)
         {
             BaseUnits = CopyUnit.BaseUnits;
             UnitType = CopyUnit.UnitType;
             BaseUnits.First().Prefix = prefix;
-        }
-        public static PhysicalUnit Clone(PhysicalUnit CopyUnit)
-        {
-            if (CopyUnit == null) return new PhysicalUnit();
-            var result = new PhysicalUnit()
-            {
-                UnitType = CopyUnit.UnitType,
-                
-            };
-            // Cloner les RawUnits
-            foreach (var unit in CopyUnit.BaseUnits)
-            {
-                result.BaseUnits.Add(BaseUnit.Clone(unit));
-            }
-            return result;
-        }
-
-        private string CalculateDimensionalFormula()
-        {
-            return DimensionalFormulaHelper.GetFormulaString(this);
         }
 
         public override string ToString() => PhysicalUnitNameHelper.GetPhysicalUnitSymbol(this);
@@ -106,7 +77,6 @@ namespace MatthL.PhysicalUnits.Core.Models
                                 .OnDelete(DeleteBehavior.Cascade);
             });
         }
-
 
     }
 }

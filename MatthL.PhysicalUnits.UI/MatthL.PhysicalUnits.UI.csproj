@@ -12,7 +12,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MatthL.PhysicalUnits.Computation\MatthL.PhysicalUnits.Computation.csproj" />
     <ProjectReference Include="..\MatthL.PhysicalUnits.Core\MatthL.PhysicalUnits.Core.csproj" />
+    <ProjectReference Include="..\MatthL.PhysicalUnits.DimensionalFormulas\MatthL.PhysicalUnits.DimensionalFormulas.csproj" />
+    <ProjectReference Include="..\MatthL.PhysicalUnits.Infrastructure\MatthL.PhysicalUnits.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>

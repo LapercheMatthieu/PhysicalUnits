@@ -1,141 +1,99 @@
-﻿
-using MatthL.PhysicalUnits.Core.Enums.Extensions;
+﻿using MatthL.PhysicalUnits.Core.EnumHelpers;
 using MatthL.PhysicalUnits.Core.Enums;
 using MatthL.PhysicalUnits.Core.Models;
-using MatthL.PhysicalUnits.Core.Tools;
+using MatthL.PhysicalUnits.Infrastructure.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+using static MatthL.PhysicalUnits.Infrastructure.Repositories.PhysicalUnitRepository;
 
 namespace MatthL.PhysicalUnits.Infrastructure.Repositories
 {
     /// <summary>
-    /// Service de stockage et recherche des unités physiques
+    /// Search engine for physical units with filtering and search capabilities
     /// </summary>
-    public static class PhysicalUnitStorage
+    public static class RepositorySearchEngine
     {
-        private static readonly List<PhysicalUnit> _units = new List<PhysicalUnit>();
-        private static readonly Dictionary<string, List<PhysicalUnit>> _unitsByFormula = new Dictionary<string, List<PhysicalUnit>>();
-        private static bool _initialized = false;
-            
-        public static bool ShowMetrics { get; set; }
-        public static bool ShowImperial { get; set; }
-        public static bool ShowUS { get; set; }
-        public static bool ShowAstronomic { get; set; }
-        public static bool ShowOther { get; set; }
-
         /// <summary>
-        /// Initialise le stockage avec toutes les unités
+        /// Generic method to get units with multiple filters
         /// </summary>
-        public static void Initialize()
-        {
-            if (_initialized) return;
-
-            // Charger toutes les unités depuis la bibliothèque
-            PhysicalUnitLibrary.LoadAll(_units);
-                
-            ShowMetrics = true;
-            ShowImperial = true;
-            ShowAstronomic = true;
-            ShowOther = true;
-            ShowUS = true;
-
-            // Indexer par formule dimensionnelle
-            foreach (var unit in _units)
-            {
-                var formula = unit.DimensionalFormula;
-                if (!_unitsByFormula.ContainsKey(formula))
-                    _unitsByFormula[formula] = new List<PhysicalUnit>();
-                _unitsByFormula[formula].Add(unit);
-            }
-
-            _initialized = true;
-        }
-
-        /// <summary>
-        /// Méthode générique pour obtenir des unités avec filtres multiples
-        /// </summary>
-        /// <param name="domain">Domaine des unités (optionnel)</param>
-        /// <param name="unitType">Type d'unité spécifique (optionnel)</param>
-        /// <param name="unitSystem">Système d'unités (optionnel)</param>
-        /// <param name="onlySI">Filtrer uniquement les unités SI (optionnel)</param>
-        /// <param name="withPrefix">Filtrer par préfixe spécifique (optionnel)</param>
-        /// <param name="searchText">Texte de recherche dans nom/symbole (optionnel)</param>
-        /// <param name="dimensionalFormula">Formule dimensionnelle exacte (optionnel)</param>
-        /// <returns>Liste des unités correspondant aux critères</returns>
+        /// <param name="UseStandardFilters">Apply standard system filters</param>
+        /// <param name="domain">Unit domain (optional)</param>
+        /// <param name="unitType">Specific unit type (optional)</param>
+        /// <returns>List of units matching the criteria</returns>
         public static List<PhysicalUnit> GetUnits(
             bool UseStandardFilters = true,
             PhysicalUnitDomain? domain = null,
-            UnitType? unitType = null
-            )
+            UnitType? unitType = null)
         {
             Initialize();
 
-            // Commencer avec toutes les unités
-            var query = _units.AsQueryable();
+            // Start with all units
+            var query = AvailableUnits.AsQueryable();
 
-            // Appliquer les filtres selon les paramètres fournis
+            // Apply filters based on provided parameters
 
-            // Filtre par domaine
+            // Filter by domain
             if (domain.HasValue)
             {
                 query = query.Where(u => u.UnitType.GetDomain() == domain.Value);
             }
 
-            // Filtre par type d'unité
+            // Filter by unit type
             if (unitType.HasValue)
             {
                 query = query.Where(u => u.UnitType == unitType.Value);
             }
 
-            // Filtre si standardFilters
+            // Apply standard filters
             if (UseStandardFilters)
             {
                 query = query.Where(u =>
-                      ShowMetrics && u.UnitSystem == StandardUnitSystem.Metric ||
-                      ShowImperial && u.UnitSystem == StandardUnitSystem.Imperial ||
-                      ShowOther && u.UnitSystem == StandardUnitSystem.Other ||
-                      ShowUS && u.UnitSystem == StandardUnitSystem.US ||
-                      ShowAstronomic && u.UnitSystem == StandardUnitSystem.Astronomical ||
-                      u.UnitSystem == StandardUnitSystem.SI || 
+                      Settings.ShowMetrics && u.UnitSystem == StandardUnitSystem.Metric ||
+                      Settings.ShowImperial && u.UnitSystem == StandardUnitSystem.Imperial ||
+                      Settings.ShowOther && u.UnitSystem == StandardUnitSystem.Other ||
+                      Settings.ShowUS && u.UnitSystem == StandardUnitSystem.US ||
+                      Settings.ShowAstronomic && u.UnitSystem == StandardUnitSystem.Astronomical ||
+                      u.UnitSystem == StandardUnitSystem.SI ||
                       u.UnitSystem == StandardUnitSystem.Mixed
                   );
             }
-
 
             return query.ToList();
         }
 
         /// <summary>
-        /// Obtient toutes les unités d'un type donné
+        /// Gets all units of a given type
         /// </summary>
         public static List<PhysicalUnit> GetUnitsOfType(UnitType type, bool WithFilter = true)
         {
             Initialize();
-            return _units.Where(u => u.UnitType == type).ToList();
+            return AvailableUnits.Where(u => u.UnitType == type).ToList();
         }
 
         /// <summary>
-        /// Obtient la donnée SI d'un type
+        /// Gets the SI unit of a specific type
         /// </summary>
         public static PhysicalUnit GetSIUnitsOfType(UnitType type)
         {
             Initialize();
-            return PhysicalUnit.Clone(_units.Where(u => u.UnitType == type && u.IsSI == true && !u.HasPrefixes()).FirstOrDefault()) ;
+            return AvailableUnits.Where(u => u.UnitType == type && u.IsSI == true && !u.HasPrefixes()).FirstOrDefault()?.Clone();
         }
 
-
         /// <summary>
-        /// Obtient toutes les unités
+        /// Gets all units
         /// </summary>
         public static IEnumerable<PhysicalUnit> GetAllUnits()
         {
             Initialize();
-            return _units;
+            return AvailableUnits;
         }
 
         /// <summary>
-        /// Obtient les domaines disponibles
+        /// Gets available domains
         /// </summary>
         public static IEnumerable<PhysicalUnitDomain> GetDomains()
         {
@@ -144,14 +102,14 @@ namespace MatthL.PhysicalUnits.Infrastructure.Repositories
         }
 
         /// <summary>
-        /// Obtient les types d'unités pour un domaine
+        /// Gets unit types for a domain
         /// </summary>
         public static List<UnitType> GetUnitTypesForDomain(PhysicalUnitDomain? domain, bool WithFilter = true)
         {
             Initialize();
-            if(domain == null)
+            if (domain == null)
             {
-                return _units
+                return AvailableUnits
                 .Select(u => u.UnitType)
                 .Distinct()
                 .OrderBy(t => t.ToString())
@@ -159,7 +117,7 @@ namespace MatthL.PhysicalUnits.Infrastructure.Repositories
             }
             else
             {
-                return _units
+                return AvailableUnits
                 .Where(u => u.UnitType.GetDomain() == domain)
                 .Select(u => u.UnitType)
                 .Distinct()
@@ -169,29 +127,29 @@ namespace MatthL.PhysicalUnits.Infrastructure.Repositories
         }
 
         /// <summary>
-        /// Obtient les unités pour un type donné
+        /// Gets units for a given type
         /// </summary>
         public static List<PhysicalUnit> GetUnitsPerType(UnitType type, bool WithFilter = true)
         {
             Initialize();
-            return _units
+            return AvailableUnits
                 .Where(u => u.UnitType == type)
                 .ToList();
         }
 
         /// <summary>
-        /// Trouve les unités correspondant à une formule dimensionnelle
+        /// Finds units matching a dimensional formula
         /// </summary>
         public static List<PhysicalUnit> GetUnitsFromDimensionalFormula(string formula)
         {
             Initialize();
-            return _unitsByFormula.TryGetValue(formula, out var units)
+            return AvailableUnitsByFormula.TryGetValue(formula, out var units)
                 ? new List<PhysicalUnit>(units)
                 : new List<PhysicalUnit>();
         }
 
         /// <summary>
-        /// Recherche des unités par texte
+        /// Search units by text in name, symbol, or unit type
         /// </summary>
         public static List<PhysicalUnit> SearchUnits(string searchText)
         {
@@ -201,7 +159,7 @@ namespace MatthL.PhysicalUnits.Infrastructure.Repositories
             Initialize();
             var searchLower = searchText.ToLowerInvariant();
 
-            return _units
+            return AvailableUnits
                 .Where(u =>
                     u.Name.ToLowerInvariant().Contains(searchLower) ||
                     u.BaseUnits.Any(b =>
@@ -210,8 +168,9 @@ namespace MatthL.PhysicalUnits.Infrastructure.Repositories
                     u.UnitType.ToString().ToLowerInvariant().Contains(searchLower))
                 .ToList();
         }
+
         /// <summary>
-        /// Recherche des unités par texte
+        /// Search units by text within units matching a dimensional formula
         /// </summary>
         public static List<PhysicalUnit> SearchUnits(string searchText, string formula)
         {
@@ -230,8 +189,5 @@ namespace MatthL.PhysicalUnits.Infrastructure.Repositories
                     u.UnitType.ToString().ToLowerInvariant().Contains(searchLower))
                 .ToList();
         }
-
-
     }
 }
-

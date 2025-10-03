@@ -1,8 +1,6 @@
 ﻿using MatthL.PhysicalUnits.Core.Enums;
 using MatthL.PhysicalUnits.Core.Models;
-using MatthL.PhysicalUnits.Core.Services;
-using System.Collections.Generic;
-using System.Linq;
+using MatthL.PhysicalUnits.Infrastructure.Repositories;
 using System.Windows.Controls;
 
 namespace MatthL.PhysicalUnits.UI.ViewsButtons
@@ -11,24 +9,24 @@ namespace MatthL.PhysicalUnits.UI.ViewsButtons
     {
         public PhysicalUnitCombobox()
         {
-            ItemsSource = PhysicalUnitStorage.GetAllUnits();
+            ItemsSource = RepositorySearchEngine.GetAllUnits();
             DisplayMemberPath = "ToString";
         }
 
         public PhysicalUnitCombobox(UnitType unitType)
         {
-            ItemsSource = PhysicalUnitStorage.GetUnitsOfType(unitType);
+            ItemsSource = RepositorySearchEngine.GetUnitsOfType(unitType);
             DisplayMemberPath = "ToString";
         }
 
         public void LimitSource(UnitType unitType)
         {
-            ItemsSource = PhysicalUnitStorage.GetUnitsOfType(unitType);
+            ItemsSource = RepositorySearchEngine.GetUnitsOfType(unitType);
         }
 
         public void DurationTypeCombobox()
         {
-            var timeUnits = PhysicalUnitStorage.GetUnitsOfType(UnitType.Time_Base).ToList();
+            var timeUnits = RepositorySearchEngine.GetUnitsOfType(UnitType.Time_Base).ToList();
 
             // Trouver l'unité seconde (SI)
             var second = timeUnits.FirstOrDefault(u => u.IsSI);

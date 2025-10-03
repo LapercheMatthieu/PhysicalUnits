@@ -1,19 +1,16 @@
-﻿using Fractions;
-using MatthL.PhysicalUnits.Core.Enums;
-using MatthL.PhysicalUnits.Core.Formulas;
-using MatthL.PhysicalUnits.Core.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using MatthL.PhysicalUnits.Core.Enums;
+using MatthL.PhysicalUnits.Core.Tools;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace MatthL.PhysicalUnits.Core.Models.Helpers
 {
-    public static class PhysicalUnitNameHelper
+    /// <summary>
+    /// Helper class to build the name of a physical Unit
+    /// </summary>
+    internal static class PhysicalUnitNameHelper
     {
         /// <summary>
-        /// Génère le nom complet d'une PhysicalUnit basé sur ses BaseUnits
+        /// Generate the full name based on base units
         /// </summary>
         public static string GetPhysicalUnitName(PhysicalUnit unit)
         {
@@ -47,8 +44,7 @@ namespace MatthL.PhysicalUnits.Core.Models.Helpers
 
         public static string GetPhysicalUnitSymbol(PhysicalUnit unit)
         {
-
-           // return string.Join("·", BaseUnits.Select(b => b.ToString()));
+            // return string.Join("·", BaseUnits.Select(b => b.ToString()));
 
             if (unit == null || !unit.BaseUnits.Any())
                 return "SI";
@@ -60,7 +56,7 @@ namespace MatthL.PhysicalUnits.Core.Models.Helpers
 
             var nameBuilder = new StringBuilder();
 
-            for(int i = 0; i< finalList.Count-1; i++)
+            for (int i = 0; i < finalList.Count - 1; i++)
             {
                 nameBuilder.Append($"{finalList[i].ToString()}·");
             }
@@ -68,7 +64,6 @@ namespace MatthL.PhysicalUnits.Core.Models.Helpers
 
             return nameBuilder.ToString();
         }
-
 
         private static List<BaseUnit> OrderUnits(List<BaseUnit> ListToOrder)
         {
@@ -199,14 +194,16 @@ namespace MatthL.PhysicalUnits.Core.Models.Helpers
             {
                 case 1:
                     return $"{number}st";
+
                 case 2:
                     return $"{number}nd";
+
                 case 3:
                     return $"{number}rd";
+
                 default:
                     return $"{number}th";
             }
         }
-
     }
 }

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MatthL.PhysicalUnits.Core.Enums
+﻿namespace MatthL.PhysicalUnits.Core.Enums
 {
     /// <summary>
     /// Types d'unités physiques organisés par domaine
@@ -14,6 +8,7 @@ namespace MatthL.PhysicalUnits.Core.Enums
     {
         // ===== DIMENSIONS DE BASE (7 SI + extensions) =====
         Length_Base,
+
         Mass_Base,
         Time_Base,
         ElectricCurrent_Base,
@@ -28,6 +23,7 @@ namespace MatthL.PhysicalUnits.Core.Enums
         // ===== MÉCANIQUE =====
         // Géométrie
         Area_Mech,
+
         Volume_Mech,
         AreaMomentOfInertia_Mech,
         MassMomentOfInertia_Mech,
@@ -35,12 +31,14 @@ namespace MatthL.PhysicalUnits.Core.Enums
 
         // Cinématique
         Speed_Mech,
+
         Acceleration_Mech,
         Jerk_Mech,
         RotationalSpeed_Mech,
 
         // Dynamique
         Force_Mech,
+
         Torque_Mech,
         ForcePerLength_Mech,
         TorquePerLength_Mech,
@@ -48,10 +46,12 @@ namespace MatthL.PhysicalUnits.Core.Enums
 
         // Pression et contraintes
         Pressure_Mech,
+
         PressureChangeRate_Mech,
 
         // Énergie et puissance
         Energy_Mech,
+
         Power_Mech,
         SpecificEnergy_Mech,
         PowerDensity_Mech,
@@ -59,6 +59,7 @@ namespace MatthL.PhysicalUnits.Core.Enums
 
         // Propriétés des matériaux
         Density_Mech,
+
         LinearDensity_Mech,
         AreaDensity_Mech,
         SpecificVolume_Mech,
@@ -69,6 +70,7 @@ namespace MatthL.PhysicalUnits.Core.Enums
 
         // ===== FLUIDIQUE =====
         VolumeFlow_Fluid,
+
         MassFlow_Fluid,
         MassFlux_Fluid,
         VolumePerLength_Fluid,
@@ -77,6 +79,7 @@ namespace MatthL.PhysicalUnits.Core.Enums
 
         // ===== THERMODYNAMIQUE =====
         HeatFlux_Thermo,
+
         HeatTransferCoefficient_Thermo,
         ThermalConductivity_Thermo,
         ThermalResistance_Thermo,
@@ -85,18 +88,21 @@ namespace MatthL.PhysicalUnits.Core.Enums
 
         // Capacités thermiques
         SpecificHeatCapacity_Thermo,
+
         Enthalpy_Thermo,
         Entropy_Thermo,
         SpecificEntropy_Thermo,
 
         // Propriétés thermiques
         CoefficientOfThermalExpansion_Thermo,
+
         TemperatureChangeRate_Thermo,
         LapseRate_Thermo,
 
         // ===== ÉLECTRICITÉ & MAGNÉTISME =====
         // Électricité de base
         ElectricCharge_Elec,
+
         ElectricPotential_Elec,
         ElectricResistance_Elec,
         ElectricConductance_Elec,
@@ -105,18 +111,21 @@ namespace MatthL.PhysicalUnits.Core.Enums
 
         // Champs et flux
         ElectricField_Elec,
+
         MagneticField_Elec,
         MagneticFlux_Elec,
         Magnetization_Elec,
 
         // Propriétés électriques
         ElectricConductivity_Elec,
+
         ElectricResistivity_Elec,
         Permittivity_Elec,
         Permeability_Elec,
 
         // Densités et gradients
         ElectricChargeDensity_Elec,
+
         ElectricSurfaceChargeDensity_Elec,
         ElectricCurrentDensity_Elec,
         ElectricCurrentGradient_Elec,
@@ -124,12 +133,14 @@ namespace MatthL.PhysicalUnits.Core.Enums
 
         // Puissance électrique
         ApparentPower_Elec,
+
         ReactivePower_Elec,
         ApparentEnergy_Elec,
         ReactiveEnergy_Elec,
 
         // ===== CHIMIE =====
         Molarity_Chem,
+
         MolarMass_Chem,
         MolarFlow_Chem,
         MolarEnergy_Chem,
@@ -137,6 +148,7 @@ namespace MatthL.PhysicalUnits.Core.Enums
 
         // ===== OPTIQUE & RADIATION =====
         Illuminance_Optic,
+
         LuminousFlux_Optic,
         Irradiance_Optic,
         Irradiation_Optic,
@@ -146,10 +158,12 @@ namespace MatthL.PhysicalUnits.Core.Enums
 
         // ===== TRANSPORT & CARBURANT =====
         FuelEfficiency_Transport,
+
         BrakeSpecificFuelConsumption_Transport,
 
         // ===== ÉCONOMIE =====
         Cost_Econ,
+
         EnergyCost_Econ,
         PowerCost_Econ,
         MassCost_Econ,
@@ -159,10 +173,9 @@ namespace MatthL.PhysicalUnits.Core.Enums
 
         // ===== UNITÉS SPÉCIALES =====
         Level_Special,          // Décibels, etc.
+
         RelativeHumidity_Special,
         VolumeConcentration_Special,
         Unknown_Special,
     }
-
-    
 }

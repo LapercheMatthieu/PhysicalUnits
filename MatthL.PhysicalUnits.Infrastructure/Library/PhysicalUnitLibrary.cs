@@ -1,14 +1,9 @@
 ﻿using Fractions;
 using MatthL.PhysicalUnits.Core.Enums;
 using MatthL.PhysicalUnits.Core.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static MatthL.PhysicalUnits.Core.Services.PhysicalUnitLibraryFactory;
+using static MatthL.PhysicalUnits.Infrastructure.Library.PhysicalUnitLibraryFactory;
 
-namespace MatthL.PhysicalUnits.Core.Services
+namespace MatthL.PhysicalUnits.Infrastructure.Library
 {
     /// <summary>
     /// Bibliothèque contenant toutes les définitions d'unités de base
@@ -842,7 +837,7 @@ namespace MatthL.PhysicalUnits.Core.Services
 
             // ===== DÉBIT VOLUMIQUE =====
             Add(GetRegisteredUnit("CubicMeterPerSecond"));
-            
+
             Add(GetRegisteredUnit("SquareMeterPerSecond"));
             AddComposite(UnitType.VolumeFlow_Fluid, ("Meter", 3), ("Hour", -1));
             AddComposite(UnitType.VolumeFlow_Fluid, ("Meter", 3), ("Day", -1));
@@ -1014,8 +1009,8 @@ namespace MatthL.PhysicalUnits.Core.Services
                 => Add(Composite(type, components));
 
             // ===== QUANTITÉ D'INFORMATION =====
-          //  Add(GetRegisteredUnit("Bit"));
-          //  Add(GetRegisteredUnit("Byte"));
+            //  Add(GetRegisteredUnit("Bit"));
+            //  Add(GetRegisteredUnit("Byte"));
 
             // ===== DÉBIT D'INFORMATION =====
             AddComposite(UnitType.BitRate_Info, ("Bit", 1), ("Second", -1));

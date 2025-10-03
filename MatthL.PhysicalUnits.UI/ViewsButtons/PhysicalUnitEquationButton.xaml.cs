@@ -1,9 +1,7 @@
-﻿using MatthL.PhysicalUnits.Core.DimensionFormulas;
-using MatthL.PhysicalUnits.Core.EquationModels;
+﻿using MatthL.PhysicalUnits.Core.EquationModels;
 using MatthL.PhysicalUnits.Core.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using MatthL.PhysicalUnits.DimensionalFormulas;
+using MatthL.PhysicalUnits.DimensionalFormulas.Extensions;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -76,7 +74,7 @@ namespace MatthL.PhysicalUnits.UI.ViewsButtons
                 typeof(PhysicalUnitEquationButton),
                 new PropertyMetadata(10));
 
-        #endregion
+        #endregion Dependency Properties
 
         #region Properties
 
@@ -134,7 +132,7 @@ namespace MatthL.PhysicalUnits.UI.ViewsButtons
             set { SetValue(MaxSuggestionsProperty, value); }
         }
 
-        #endregion
+        #endregion Properties
 
         #region Constructor
 
@@ -146,7 +144,7 @@ namespace MatthL.PhysicalUnits.UI.ViewsButtons
             UpdateUnitTooltip();
         }
 
-        #endregion
+        #endregion Constructor
 
         #region Methods
 
@@ -184,11 +182,11 @@ namespace MatthL.PhysicalUnits.UI.ViewsButtons
         {
             if (SelectedUnit != null)
             {
-                UnitTooltip = $"{SelectedUnit.Name} ({SelectedUnit.DimensionalFormula})";
+                UnitTooltip = $"{SelectedUnit.Name} ({SelectedUnit.GetDimensionalFormula()})";
             }
             else if (EquationTerms?.Terms != null && EquationTerms.Terms.Any())
             {
-                var formula = DimensionalFormulaHelper.GetFormulaString(EquationTerms.Terms.ToArray());
+                var formula = FormulaBuilder.GetDimensionalFormula(EquationTerms.Terms.ToArray());
                 UnitTooltip = $"Formule: {formula}";
             }
             else
@@ -218,6 +216,6 @@ namespace MatthL.PhysicalUnits.UI.ViewsButtons
             UpdateUnitTooltip();
         }
 
-        #endregion
+        #endregion Methods
     }
 }

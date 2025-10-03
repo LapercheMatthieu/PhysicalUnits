@@ -1,11 +1,10 @@
-﻿using MatthL.PhysicalUnits.Core.DimensionFormulas;
+﻿using MatthL.PhysicalUnits.Computation.Helpers;
+using MatthL.PhysicalUnits.Computation.Models;
 using MatthL.PhysicalUnits.Core.EquationModels;
 using MatthL.PhysicalUnits.Core.Models;
-using System;
-using System.Collections.Generic;
+using MatthL.PhysicalUnits.DimensionalFormulas;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
@@ -49,7 +48,7 @@ namespace MatthL.PhysicalUnits.UI.Views
                 typeof(PhysicalUnitEquationResultView),
                 new PropertyMetadata(10));
 
-        #endregion
+        #endregion Dependency Properties
 
         #region Properties
 
@@ -71,8 +70,9 @@ namespace MatthL.PhysicalUnits.UI.Views
             set => SetValue(MaxSuggestionsProperty, value);
         }
 
-        private ObservableCollection<PhysicalUnitMatch.UnitSuggestion> _suggestions = new ObservableCollection<PhysicalUnitMatch.UnitSuggestion>();
-        public ObservableCollection<PhysicalUnitMatch.UnitSuggestion> Suggestions
+        private ObservableCollection<UnitSuggestion> _suggestions = new ObservableCollection<UnitSuggestion>();
+
+        public ObservableCollection<UnitSuggestion> Suggestions
         {
             get => _suggestions;
             set
@@ -82,8 +82,9 @@ namespace MatthL.PhysicalUnits.UI.Views
             }
         }
 
-        private PhysicalUnitMatch.UnitSuggestion _selectedSuggestion;
-        public PhysicalUnitMatch.UnitSuggestion SelectedSuggestion
+        private UnitSuggestion _selectedSuggestion;
+
+        public UnitSuggestion SelectedSuggestion
         {
             get => _selectedSuggestion;
             set
@@ -100,6 +101,7 @@ namespace MatthL.PhysicalUnits.UI.Views
         }
 
         private string _equationFormula;
+
         public string EquationFormula
         {
             get => _equationFormula;
@@ -111,6 +113,7 @@ namespace MatthL.PhysicalUnits.UI.Views
         }
 
         private bool _showExplanations = false;
+
         public bool ShowExplanations
         {
             get => _showExplanations;
@@ -121,7 +124,7 @@ namespace MatthL.PhysicalUnits.UI.Views
             }
         }
 
-        #endregion
+        #endregion Properties
 
         #region Constructor
 
@@ -129,10 +132,9 @@ namespace MatthL.PhysicalUnits.UI.Views
         {
             InitializeComponent();
             DataContext = this;
-
         }
 
-        #endregion
+        #endregion Constructor
 
         #region Methods
 
@@ -154,10 +156,10 @@ namespace MatthL.PhysicalUnits.UI.Views
 
             // Calculer la formule dimensionnelle
             var terms = EquationTerms.Terms.ToArray();
-            EquationFormula = DimensionalFormulaHelper.GetFormulaString(terms);
+            EquationFormula = FormulaBuilder.GetDimensionalFormula(terms);
 
             // Obtenir les suggestions
-            var suggestions = PhysicalUnitMatch.GetUnitSuggestions(terms);
+            var suggestions = UnitSuggestionHelper.GetUnitSuggestions(terms);
 
             // Limiter le nombre de suggestions et les ajouter
             foreach (var suggestion in suggestions.Take(MaxSuggestions))
@@ -172,7 +174,7 @@ namespace MatthL.PhysicalUnits.UI.Views
             }
         }
 
-        #endregion
+        #endregion Methods
 
         #region INotifyPropertyChanged
 
@@ -183,6 +185,6 @@ namespace MatthL.PhysicalUnits.UI.Views
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        #endregion
+        #endregion INotifyPropertyChanged
     }
 }

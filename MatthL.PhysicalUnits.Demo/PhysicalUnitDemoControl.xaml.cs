@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Fractions;
+using MatthL.PhysicalUnits.Computation.Converters;
+using MatthL.PhysicalUnits.Core.EquationModels;
+using MatthL.PhysicalUnits.Core.Models;
+using MatthL.PhysicalUnits.Infrastructure.Extensions;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
-using Fractions;
-using MatthL.PhysicalUnits.Core.EquationModels;
-using MatthL.PhysicalUnits.Core.Models;
 
 namespace MatthL.PhysicalUnits.Demo
 {
@@ -18,6 +19,7 @@ namespace MatthL.PhysicalUnits.Demo
 
         // Première unité
         private double _value1 = 1.0;
+
         public double Value1
         {
             get => _value1;
@@ -30,6 +32,7 @@ namespace MatthL.PhysicalUnits.Demo
         }
 
         private PhysicalUnit _unit1;
+
         public PhysicalUnit Unit1
         {
             get => _unit1;
@@ -40,7 +43,9 @@ namespace MatthL.PhysicalUnits.Demo
                 UpdateCalculations();
             }
         }
+
         private PhysicalUnit _unit1InSI;
+
         public PhysicalUnit Unit1InSI
         {
             get => _unit1InSI;
@@ -52,6 +57,7 @@ namespace MatthL.PhysicalUnits.Demo
         }
 
         private double _value1InSI;
+
         public double Value1InSI
         {
             get => _value1InSI;
@@ -64,6 +70,7 @@ namespace MatthL.PhysicalUnits.Demo
 
         // Deuxième unité
         private double _value2 = 1.0;
+
         public double Value2
         {
             get => _value2;
@@ -76,6 +83,7 @@ namespace MatthL.PhysicalUnits.Demo
         }
 
         private PhysicalUnit _unit2;
+
         public PhysicalUnit Unit2
         {
             get => _unit2;
@@ -88,6 +96,7 @@ namespace MatthL.PhysicalUnits.Demo
         }
 
         private PhysicalUnit _unit2InSI;
+
         public PhysicalUnit Unit2InSI
         {
             get => _unit2InSI;
@@ -99,6 +108,7 @@ namespace MatthL.PhysicalUnits.Demo
         }
 
         private double _value2InSI;
+
         public double Value2InSI
         {
             get => _value2InSI;
@@ -111,6 +121,7 @@ namespace MatthL.PhysicalUnits.Demo
 
         // Conversion entre unités
         private PhysicalUnit _targetUnit;
+
         public PhysicalUnit TargetUnit
         {
             get => _targetUnit;
@@ -123,6 +134,7 @@ namespace MatthL.PhysicalUnits.Demo
         }
 
         private double _convertedValue1;
+
         public double ConvertedValue1
         {
             get => _convertedValue1;
@@ -134,6 +146,7 @@ namespace MatthL.PhysicalUnits.Demo
         }
 
         private double _convertedValue2;
+
         public double ConvertedValue2
         {
             get => _convertedValue2;
@@ -146,6 +159,7 @@ namespace MatthL.PhysicalUnits.Demo
 
         // Exposants pour l'équation
         private string _exponent1 = "1";
+
         public string Exponent1
         {
             get => _exponent1;
@@ -158,6 +172,7 @@ namespace MatthL.PhysicalUnits.Demo
         }
 
         private string _exponent2 = "1";
+
         public string Exponent2
         {
             get => _exponent2;
@@ -170,6 +185,7 @@ namespace MatthL.PhysicalUnits.Demo
         }
 
         private EquationTerms _equationTerms;
+
         public EquationTerms EquationTerms
         {
             get => _equationTerms;
@@ -181,6 +197,7 @@ namespace MatthL.PhysicalUnits.Demo
         }
 
         private PhysicalUnit _equationResultUnit;
+
         public PhysicalUnit EquationResultUnit
         {
             get => _equationResultUnit;
@@ -191,7 +208,7 @@ namespace MatthL.PhysicalUnits.Demo
             }
         }
 
-        #endregion
+        #endregion Properties
 
         #region Constructor
 
@@ -201,7 +218,7 @@ namespace MatthL.PhysicalUnits.Demo
             DataContext = this;
         }
 
-        #endregion
+        #endregion Constructor
 
         #region Methods
 
@@ -330,7 +347,7 @@ namespace MatthL.PhysicalUnits.Demo
             Exponent2 = "1";
         }
 
-        #endregion
+        #endregion Methods
 
         #region INotifyPropertyChanged
 
@@ -341,7 +358,7 @@ namespace MatthL.PhysicalUnits.Demo
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        #endregion
+        #endregion INotifyPropertyChanged
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {

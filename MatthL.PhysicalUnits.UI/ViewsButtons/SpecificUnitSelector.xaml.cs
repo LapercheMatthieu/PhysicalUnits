@@ -1,21 +1,8 @@
-﻿using MahApps.Metro.IconPacks;
-using MatthL.PhysicalUnits.Core.Enums;
+﻿using MatthL.PhysicalUnits.Core.Enums;
 using MatthL.PhysicalUnits.Core.Models;
-using MatthL.PhysicalUnits.Core.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using MatthL.PhysicalUnits.Infrastructure.Library;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace MatthL.PhysicalUnits.UI.ViewsButtons
 {
@@ -50,7 +37,7 @@ namespace MatthL.PhysicalUnits.UI.ViewsButtons
                 typeof(SpecificUnitSelector),
                 new PropertyMetadata(new List<PhysicalUnit>()));
 
-        #endregion
+        #endregion Dependency Properties
 
         #region Properties
 
@@ -72,7 +59,7 @@ namespace MatthL.PhysicalUnits.UI.ViewsButtons
             set => SetValue(AvailableUnitsProperty, value);
         }
 
-        #endregion
+        #endregion Properties
 
         public SpecificUnitSelector()
         {
@@ -92,12 +79,12 @@ namespace MatthL.PhysicalUnits.UI.ViewsButtons
                 case UnitCategory.Time:
                     AvailableUnits = GetTimeUnits();
                     break;
+
                 case UnitCategory.Electric:
                     AvailableUnits = GetElectricUnits();
                     break;
             }
         }
-
 
         private List<PhysicalUnit> GetTimeUnits()
         {

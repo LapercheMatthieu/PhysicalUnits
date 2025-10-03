@@ -1,13 +1,6 @@
 ﻿using Fractions;
-using MatthL.PhysicalUnits.Core.Enums;
-using MatthL.PhysicalUnits.Core.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace MatthL.PhysicalUnits.Core.Formulas
+namespace MatthL.PhysicalUnits.Core.Tools
 {
     /// <summary>
     /// Helper to build equations in string
@@ -21,7 +14,7 @@ namespace MatthL.PhysicalUnits.Core.Formulas
         {
             {'0', '⁰'}, {'1', '¹'}, {'2', '²'}, {'3', '³'}, {'4', '⁴'},
             {'5', '⁵'}, {'6', '⁶'}, {'7', '⁷'}, {'8', '⁸'}, {'9', '⁹'},
-            {'+', '⁺'}, {'-', '⁻'}, {'/', 'ᐟ'} 
+            {'+', '⁺'}, {'-', '⁻'}, {'/', 'ᐟ'}
         };
 
         /// <summary>
@@ -142,8 +135,5 @@ namespace MatthL.PhysicalUnits.Core.Formulas
             // Si c'est une fraction
             return $"{factor.Numerator}/{factor.Denominator}";
         }
-
-
-
     }
 }

@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MatthL.PhysicalUnits.Core\MatthL.PhysicalUnits.Core.csproj" />
+    <ProjectReference Include="..\MatthL.PhysicalUnits.DimensionalFormulas\MatthL.PhysicalUnits.DimensionalFormulas.csproj" />
   </ItemGroup>
 
 </Project>
