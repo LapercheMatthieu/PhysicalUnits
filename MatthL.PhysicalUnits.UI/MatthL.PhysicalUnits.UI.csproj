@@ -10,12 +10,19 @@
   <ItemGroup>
     <PackageReference Include="MatthL.WPF.Essentials" Version="0.9.0" />
   </ItemGroup>
+	<ItemGroup>
+		<None Include="README.md" Pack="true" PackagePath="\" />
+		<None Include="LICENSE" Pack="true" PackagePath="\" />
+	</ItemGroup>
 
-  <ItemGroup>
+	<ItemGroup>
     <ProjectReference Include="..\MatthL.PhysicalUnits.Computation\MatthL.PhysicalUnits.Computation.csproj" />
     <ProjectReference Include="..\MatthL.PhysicalUnits.Core\MatthL.PhysicalUnits.Core.csproj" />
     <ProjectReference Include="..\MatthL.PhysicalUnits.DimensionalFormulas\MatthL.PhysicalUnits.DimensionalFormulas.csproj" />
     <ProjectReference Include="..\MatthL.PhysicalUnits.Infrastructure\MatthL.PhysicalUnits.Infrastructure.csproj" />
   </ItemGroup>
+	<ItemGroup>
+		<Folder Include="Resources\" />
+	</ItemGroup>
 
 </Project>
