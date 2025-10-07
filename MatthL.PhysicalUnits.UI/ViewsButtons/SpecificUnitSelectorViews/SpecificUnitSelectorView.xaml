@@ -1,0 +1,74 @@
+﻿<UserControl x:Class="MatthL.PhysicalUnits.UI.ViewsButtons.SpecificUnitSelectorViews.SpecificUnitSelectorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MatthL.PhysicalUnits.UI.ViewsButtons.SpecificUnitSelectorViews"
+                          xmlns:converter="clr-namespace:MatthL.PhysicalUnits.UI.Converters"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks" xmlns:smartpopups="clr-namespace:MatthL.WPF.Essentials.SmartPopups;assembly=MatthL.WPF.Essentials.SmartPopups"
+             mc:Ignorable="d"
+             d:DesignHeight="50" d:DesignWidth="200"
+             x:Name="SpecificUnitSelectorRoot">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <DropShadowEffect x:Key="DropShadowEffect"
+                  ShadowDepth="3"
+                  Direction="315"
+                  Color="Black"
+                  Opacity="0.3"
+                  BlurRadius="5" />
+            <converter:CategoryToVaadinIconConverter x:Key="CategoryToVaadinIconConverter" />
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MatthL.WPF.Essentials.Styles;component/StyleDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <smartpopups:SmartPopupButton>
+        <smartpopups:SmartPopupButton.ButtonContent>
+            <Grid HorizontalAlignment="Stretch">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <iconPacks:PackIconVaadinIcons Kind="{Binding Category ,RelativeSource={RelativeSource AncestorType=local:SpecificUnitSelectorView}, Converter={StaticResource CategoryToVaadinIconConverter}}" HorizontalAlignment="Left" />
+
+                <TextBlock Grid.Column="1" HorizontalAlignment="Center">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Text" Value="{Binding SelectedUnit, RelativeSource={RelativeSource AncestorType=local:SpecificUnitSelectorView}}" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding SelectedUnit, RelativeSource={RelativeSource AncestorType=local:SpecificUnitSelectorView}}" Value="{x:Null}">
+                                    <Setter Property="Text" Value="Sélectionner..." />
+                                    <Setter Property="FontStyle" Value="Italic" />
+                                    <Setter Property="Foreground" Value="Gray" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+            </Grid>
+        </smartpopups:SmartPopupButton.ButtonContent>
+
+        <smartpopups:SmartPopupButton.PopupContent>
+            <Border Background="White" BorderBrush="LightGray" BorderThickness="1" CornerRadius="3" Padding="5" MinWidth="300" MaxHeight="500">
+                <ListBox ItemsSource="{Binding AvailableUnits, RelativeSource={RelativeSource AncestorType=local:SpecificUnitSelectorView}}"
+                         SelectedItem="{Binding SelectedUnit,RelativeSource={RelativeSource AncestorType=local:SpecificUnitSelectorView}, Mode=TwoWay}"
+                         HorizontalContentAlignment="Stretch"
+                         BorderThickness="0">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{Binding Name}" HorizontalAlignment="Left" />
+                                <TextBlock Text="{Binding}" HorizontalAlignment="Right" Grid.Column="1" />
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Border>
+        </smartpopups:SmartPopupButton.PopupContent>
+    </smartpopups:SmartPopupButton>
+</UserControl>

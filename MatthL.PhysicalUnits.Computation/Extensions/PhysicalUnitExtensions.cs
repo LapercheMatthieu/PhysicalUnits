@@ -17,9 +17,26 @@ namespace MatthL.PhysicalUnits.Computation.Extensions
         public static PhysicalUnit Divide(this PhysicalUnit numerator, PhysicalUnit denominator)
         {
             return numerator.Multiply(
-                new PhysicalUnitTerm { Unit = numerator, Exponent = 1 },
                 new PhysicalUnitTerm { Unit = denominator, Exponent = -1 }
             );
+        }
+        public static PhysicalUnitTerm ToTerm(this PhysicalUnit unit, Fraction exponent)
+        {
+            return new PhysicalUnitTerm(unit, exponent);
+        }
+        public static PhysicalUnitTerm ToTerm(this PhysicalUnit unit)
+        {
+            return new PhysicalUnitTerm(unit, new Fraction(1));
+        }
+
+        public static PhysicalUnit Multiply(this PhysicalUnit numerator, params PhysicalUnit[] terms)
+        {
+            var termlist = new List<PhysicalUnitTerm>() ;
+            foreach(var  term in terms)
+            {
+                termlist.Add(term.ToTerm());
+            }
+            return numerator.Multiply(termlist.ToArray());
         }
 
         /// <summary>
@@ -73,17 +90,16 @@ namespace MatthL.PhysicalUnits.Computation.Extensions
                 UnitType = unit.UnitType
             };
 
-            //Ajouter les termes de l'unité initiale
+            //we will keep the exponent into the base unit only if this unit has more than 1 raw unit
             foreach (var baseUnit in unit.BaseUnits)
             {
-                // Cloner le BaseUnit avec le nouvel exposant
                 var newBaseUnit = baseUnit.Clone();
-                newBaseUnit.Exponent = baseUnit.Exponent;
+                newBaseUnit.Exponent *= exponent;
                 newBaseUnit.PhysicalUnit = result;
                 result.BaseUnits.Add(newBaseUnit);
             }
 
-            return result.Simplify();
+            return result; //.Simplify();
         }
     }
 }

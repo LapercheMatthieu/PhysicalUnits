@@ -18,28 +18,4 @@
     <ProjectReference Include="..\MatthL.PhysicalUnits.Infrastructure\MatthL.PhysicalUnits.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Update="ViewsButtons\PhysicalUnitEquationButton.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="ViewsButtons\SpecificUnitSelector.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Views\BaseUnitColumn.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Views\PhysicalUnitBuilder.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Views\PhysicalUnitEquationResultView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Views\PhysicalUnitModifierView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Views\UnitSystemSelector.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-  </ItemGroup>
-
 </Project>

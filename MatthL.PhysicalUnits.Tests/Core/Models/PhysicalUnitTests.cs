@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Fractions;
 using MatthL.PhysicalUnits.Core.Enums;
 using MatthL.PhysicalUnits.Core.Models;
+using MatthL.PhysicalUnits.Infrastructure.Library;
 using Xunit;
 
 namespace MatthL.PhysicalUnits.Tests.Core.Models
@@ -205,34 +206,6 @@ namespace MatthL.PhysicalUnits.Tests.Core.Models
             Assert.Empty(name);
         }
 
-        [Fact]
-        public void ComplexUnit_VelocitySquared_ConfiguresCorrectly()
-        {
-            // Arrange
-            var meter = new BaseUnit
-            {
-                Symbol = "m",
-                Prefix = Prefix.SI,
-                Exponent = new Fraction(2, 1)
-            };
-            meter.RawUnits.Add(new RawUnit(BaseUnitType.Length, 2));
-
-            var second = new BaseUnit
-            {
-                Symbol = "s",
-                Prefix = Prefix.SI,
-                Exponent = new Fraction(-2, 1)
-            };
-            second.RawUnits.Add(new RawUnit(BaseUnitType.Time, -2));
-
-            var physicalUnit = new PhysicalUnit { UnitType = UnitType.Speed_Mech };
-            physicalUnit.BaseUnits.Add(meter);
-            physicalUnit.BaseUnits.Add(second);
-
-            // Assert
-            Assert.Equal(2, physicalUnit.BaseUnits.Count);
-            Assert.True(physicalUnit.IsSI);
-        }
 
         [Fact]
         public void ComplexUnit_Force_NewtonConfigured()

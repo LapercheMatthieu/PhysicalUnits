@@ -32,5 +32,15 @@ namespace MatthL.PhysicalUnits.DimensionalFormulas.Helpers
             }
             return parts;
         }
+
+            /* the order is : 
+            Mass,                // kg
+            Length,              // m
+            Time,                // s
+            ElectricCurrent,     // A
+            Temperature,         // K
+            AmountOfSubstance,   // mol
+            LuminousIntensity,   // cd
+            // Extensions...*/
     }
 }

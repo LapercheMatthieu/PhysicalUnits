@@ -42,57 +42,46 @@ namespace MatthL.PhysicalUnits.Computation.Converters
             return newArray;
         }
 
+        /// <summary>
+        /// Return the function to multiply the value by to get the value in the SI dimension
+        /// </summary>
+        /// <param name="Unit"></param>
+        /// <returns></returns>
         public static Func<double, double> GetToSiFunction(this PhysicalUnit Unit)
         {
-            List<Func<double, double>> SingleFunctions = new List<Func<double, double>>();
+            // Check if this is a simple unit with offset (like °C)
+            bool hasOffset = Unit.BaseUnits.Any(bu => bu.Offset != 0);
+            bool isSimpleUnit = Unit.BaseUnits.Count == 1 && Unit.BaseUnits.First().Exponent.ToDouble() == 1;
 
-            // Pour chaque BaseUnit dans l'unité physique
-            foreach (var baseUnit in Unit.BaseUnits)
+            if (hasOffset && isSimpleUnit)
             {
-                double exponent = baseUnit.Exponent.ToDouble();
+                // Special case: simple unit with offset (e.g., °C → K)
+                var baseUnit = Unit.BaseUnits.First();
                 double offset = baseUnit.Offset;
-                // Le facteur de conversion de base (déjà une Fraction)
                 double factor = baseUnit.ConversionFactor.ToDouble();
-
-                // Le facteur du préfixe en Fraction
                 double prefixFactor = (double)baseUnit.Prefix.GetSize();
 
-                // Créer la fonction pour cette BaseUnit
-                Func<double, double> baseUnitFunction;
-
-                if (baseUnit.Exponent == 0) // Exposant nul
-                {
-                    baseUnitFunction = x => 1.0;
-                }
-                else if (offset == 0) // Pas d'offset (cas simple)
-                {
-                    baseUnitFunction = x => Math.Pow(prefixFactor * factor * x, exponent);
-                }
-                else // Avec offset
-                {
-                    if (exponent > 0) // Exposant positif : on applique l'offset
-                    {
-                        baseUnitFunction = x => Math.Pow(prefixFactor * (factor * x + offset), exponent);
-                    }
-                    else // Exposant négatif : pas d'offset (différence de température)
-                    {
-                        baseUnitFunction = x => Math.Pow(prefixFactor * factor * x, exponent);
-                    }
-                }
-
-                SingleFunctions.Add(baseUnitFunction);
+                return (inputValue) => prefixFactor * (factor * inputValue + offset);
             }
-
-            // Combiner toutes les fonctions
-            return (inputValue) =>
+            else
             {
-                double result = 1.0;
-                for (int i = 0; i < SingleFunctions.Count; i++)
+                // General case: calculate total conversion factor
+                double totalFactor = 1.0;
+
+                foreach (var baseUnit in Unit.BaseUnits)
                 {
-                    result *= SingleFunctions[i](inputValue);
+                    double exponent = baseUnit.Exponent.ToDouble();
+                    double factor = baseUnit.ConversionFactor.ToDouble();
+                    double prefixFactor = (double)baseUnit.Prefix.GetSize();
+
+                    if (exponent != 0)
+                    {
+                        totalFactor *= Math.Pow(prefixFactor * factor, exponent);
+                    }
                 }
-                return result;
-            };
+
+                return (inputValue) => inputValue * totalFactor;
+            }
         }
     }
 }

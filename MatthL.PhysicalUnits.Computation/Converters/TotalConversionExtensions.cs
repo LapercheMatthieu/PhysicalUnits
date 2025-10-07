@@ -15,9 +15,8 @@ namespace MatthL.PhysicalUnits.Computation.Converters
             var fromSIFunctions = toUnit.GetFromSIFunction();
             return (inputValue) =>
             {
-                double result = 1.0;
-                result *= toSiFunctions(inputValue);
-                result *= fromSIFunctions(inputValue);
+                double siValue = toSiFunctions(inputValue); 
+                double result = fromSIFunctions(siValue);    
                 return result;
             };
         }

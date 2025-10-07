@@ -1,0 +1,74 @@
+﻿<UserControl x:Class="MatthL.PhysicalUnits.UI.Views.PrefixViews.PrefixSelectorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MatthL.PhysicalUnits.UI.Views.PrefixViews"
+            xmlns:enums="clr-namespace:MatthL.PhysicalUnits.Core.Enums;assembly=MatthL.PhysicalUnits.Core">
+
+    <Border BorderBrush="Gray" BorderThickness="1" Background="White" Padding="4">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Ligne 1: yocto | yotta -->
+            <local:PrefixView x:Name="YoctoButton" Grid.Row="0" Grid.Column="0" Prefix="yocto" Margin="2" Click="PrefixButton_Click"/>
+            <local:PrefixView x:Name="YottaButton" Grid.Row="0" Grid.Column="1" Prefix="yotta" Margin="2" Click="PrefixButton_Click"/>
+
+            <!-- Ligne 2: zepto | zetta -->
+            <local:PrefixView x:Name="ZeptoButton" Grid.Row="1" Grid.Column="0" Prefix="zepto" Margin="2" Click="PrefixButton_Click"/>
+            <local:PrefixView x:Name="ZettaButton" Grid.Row="1" Grid.Column="1" Prefix="zetta" Margin="2" Click="PrefixButton_Click"/>
+
+            <!-- Ligne 3: atto | exa -->
+            <local:PrefixView x:Name="AttoButton" Grid.Row="2" Grid.Column="0" Prefix="atto" Margin="2" Click="PrefixButton_Click"/>
+            <local:PrefixView x:Name="ExaButton" Grid.Row="2" Grid.Column="1" Prefix="exa" Margin="2" Click="PrefixButton_Click"/>
+
+            <!-- Ligne 4: femto | peta -->
+            <local:PrefixView x:Name="FemtoButton" Grid.Row="3" Grid.Column="0" Prefix="femto" Margin="2" Click="PrefixButton_Click"/>
+            <local:PrefixView x:Name="PetaButton" Grid.Row="3" Grid.Column="1" Prefix="peta" Margin="2" Click="PrefixButton_Click"/>
+
+            <!-- Ligne 5: pico | tera -->
+            <local:PrefixView x:Name="PicoButton" Grid.Row="4" Grid.Column="0" Prefix="pico" Margin="2" Click="PrefixButton_Click"/>
+            <local:PrefixView x:Name="TeraButton" Grid.Row="4" Grid.Column="1" Prefix="tera" Margin="2" Click="PrefixButton_Click"/>
+
+            <!-- Ligne 6: nano | giga -->
+            <local:PrefixView x:Name="NanoButton" Grid.Row="5" Grid.Column="0" Prefix="nano" Margin="2" Click="PrefixButton_Click"/>
+            <local:PrefixView x:Name="GigaButton" Grid.Row="5" Grid.Column="1" Prefix="giga" Margin="2" Click="PrefixButton_Click"/>
+
+            <!-- Ligne 7: micro | mega -->
+            <local:PrefixView x:Name="MicroButton" Grid.Row="6" Grid.Column="0" Prefix="micro" Margin="2" Click="PrefixButton_Click"/>
+            <local:PrefixView x:Name="MegaButton" Grid.Row="6" Grid.Column="1" Prefix="mega" Margin="2" Click="PrefixButton_Click"/>
+
+            <!-- Ligne 8: milli | kilo -->
+            <local:PrefixView x:Name="MilliButton" Grid.Row="7" Grid.Column="0" Prefix="milli" Margin="2" Click="PrefixButton_Click"/>
+            <local:PrefixView x:Name="KiloButton" Grid.Row="7" Grid.Column="1" Prefix="kilo" Margin="2" Click="PrefixButton_Click"/>
+
+            <!-- Ligne 9: centi | hecto -->
+            <local:PrefixView x:Name="CentiButton" Grid.Row="8" Grid.Column="0" Prefix="centi" Margin="2" Click="PrefixButton_Click"/>
+            <local:PrefixView x:Name="HectoButton" Grid.Row="8" Grid.Column="1" Prefix="hecto" Margin="2" Click="PrefixButton_Click"/>
+
+            <!-- Ligne 10: deci | deka -->
+            <local:PrefixView x:Name="DeciButton" Grid.Row="9" Grid.Column="0" Prefix="deci" Margin="2" Click="PrefixButton_Click"/>
+            <local:PrefixView x:Name="DekaButton" Grid.Row="9" Grid.Column="1" Prefix="deka" Margin="2" Click="PrefixButton_Click"/>
+
+            <!-- Ligne 11: SI sur les deux colonnes -->
+            <local:PrefixView x:Name="SIButton" Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="2" 
+                              Prefix="SI" Margin="2" Click="PrefixButton_Click"/>
+        </Grid>
+    </Border>
+</UserControl>

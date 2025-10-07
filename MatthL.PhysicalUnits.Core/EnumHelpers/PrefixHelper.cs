@@ -47,7 +47,7 @@ namespace MatthL.PhysicalUnits.Core.EnumHelpers
     };
 
         // Secondary dictionaries for quick research
-        private static readonly Dictionary<string, Prefix> SymbolToPrefix = new Dictionary<string, Prefix>(StringComparer.OrdinalIgnoreCase);
+        private static readonly Dictionary<string, Prefix> SymbolToPrefix = new Dictionary<string, Prefix>();
 
         private static readonly Dictionary<string, Prefix> NameToPrefix = new Dictionary<string, Prefix>(StringComparer.OrdinalIgnoreCase);
 
@@ -88,7 +88,11 @@ namespace MatthL.PhysicalUnits.Core.EnumHelpers
         // Recherche de préfixe par symbole ou nom
         public static Prefix? GetPrefixBySymbol(string symbol)
         {
-            return SymbolToPrefix.TryGetValue(symbol, out var Prefix) ? Prefix : (Prefix?)null;
+            if (symbol == "" || symbol == string.Empty)
+            {
+                return Prefix.SI;
+            }
+            return SymbolToPrefix.TryGetValue(symbol, out var _Prefix) ? _Prefix : (Prefix?)null;
         }
 
         public static Prefix? GetPrefixByName(string name)
@@ -123,28 +127,17 @@ namespace MatthL.PhysicalUnits.Core.EnumHelpers
             // Récupérer tous les préfixes
             var Prefixes = Enum.GetValues(typeof(Prefix));
 
-            Prefix bestPrefix = Prefix.SI;
-            decimal bestDiff = decimal.MaxValue;
-
+            //the list is from bigger to lower we just take the first prefix for which the value is > 
             foreach (Prefix Prefix in Prefixes)
             {
-                var size = GetSize(Prefix);
-                if (size <= 0) continue;
 
-                // Chercher le préfixe qui minimise le nombre de chiffres avant la virgule
-                var scaledValue = value / size;
-                if (scaledValue >= 1 && scaledValue < 1000)
-                {
-                    var diff = Math.Abs(1 - scaledValue);
-                    if (diff < bestDiff)
-                    {
-                        bestDiff = diff;
-                        bestPrefix = Prefix;
-                    }
-                }
+                var size = GetSize(Prefix);
+                if(value>= size) return Prefix;
+
+                
             }
 
-            return bestPrefix;
+            return Prefix.SI; 
         }
     }
 

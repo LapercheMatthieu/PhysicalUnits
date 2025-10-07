@@ -2,8 +2,7 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:buttons="clr-namespace:MatthL.PhysicalUnits.UI.ViewsButtons;assembly=MatthL.PhysicalUnits.UI"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:physicalunitbuilderbuttonviews="clr-namespace:MatthL.PhysicalUnits.UI.ViewsButtons.PhysicalUnitBuilderButtonViews;assembly=MatthL.PhysicalUnits.UI" xmlns:physicalunitequationresultbuttonviews="clr-namespace:MatthL.PhysicalUnits.UI.ViewsButtons.PhysicalUnitEquationResultButtonViews;assembly=MatthL.PhysicalUnits.UI" xmlns:specificunitselectorviews="clr-namespace:MatthL.PhysicalUnits.UI.ViewsButtons.SpecificUnitSelectorViews;assembly=MatthL.PhysicalUnits.UI"
              mc:Ignorable="d"
              d:DesignHeight="600" d:DesignWidth="1000" x:Name="TestRoot">
 
@@ -87,7 +86,7 @@
 
                     <TextBlock Grid.Column="2" Text="Unité:"
                                Style="{StaticResource LabelTextStyle}" />
-                    <buttons:PhysicalUnitButton Grid.Column="3"
+                    <physicalunitbuilderbuttonviews:PhysicalUnitBuilderButtonView Grid.Column="3"
                                                SelectedUnit="{Binding Unit1, ElementName=TestRoot, Mode=TwoWay, TargetNullValue={x:Null}}"
                                                Margin="5,0" />
 
@@ -128,7 +127,7 @@
 
                     <TextBlock Grid.Column="2" Text="Unité:"
                                Style="{StaticResource LabelTextStyle}" />
-                    <buttons:PhysicalUnitButton Grid.Column="3"
+                    <physicalunitbuilderbuttonviews:PhysicalUnitBuilderButtonView Grid.Column="3"
                                                SelectedUnit="{Binding Unit2, ElementName=TestRoot, Mode=TwoWay}"
                                                Margin="5,0" />
 
@@ -167,7 +166,7 @@
 
                         <TextBlock Grid.Column="0" Text="Unité cible:"
                                    Style="{StaticResource LabelTextStyle}" />
-                        <buttons:PhysicalUnitButton Grid.Column="1"
+                        <physicalunitbuilderbuttonviews:PhysicalUnitBuilderButtonView Grid.Column="1"
                                                    SelectedUnit="{Binding TargetUnit, ElementName=TestRoot, Mode=TwoWay}"
                                                     UnitToConvert="{Binding Unit1, ElementName=TestRoot, Mode=OneWay}"
                                                     IsOnlyConvertion="True"
@@ -249,7 +248,7 @@
 
                         <TextBlock Grid.Column="0" Text="Résultat équation:"
                                    Style="{StaticResource LabelTextStyle}" />
-                        <buttons:PhysicalUnitEquationButton Grid.Column="1"
+                        <physicalunitequationresultbuttonviews:PhysicalUnitEquationResultButtonView Grid.Column="1"
                                                            EquationTerms="{Binding EquationTerms, ElementName=TestRoot}"
                                                            SelectedUnit="{Binding EquationResultUnit, ElementName=TestRoot, Mode=TwoWay}"
                                                            MaxSuggestions="20"
@@ -267,8 +266,8 @@
                 </Grid>
             </Border>
             <UniformGrid Grid.Row="9" Rows="1">
-                <buttons:SpecificUnitSelector Category="Electric" />
-                <buttons:SpecificUnitSelector Category="Time" />
+                <specificunitselectorviews:SpecificUnitSelectorView Category="Electric" />
+                <specificunitselectorviews:SpecificUnitSelectorView Category="Time" />
             </UniformGrid>
         </Grid>
     </ScrollViewer>

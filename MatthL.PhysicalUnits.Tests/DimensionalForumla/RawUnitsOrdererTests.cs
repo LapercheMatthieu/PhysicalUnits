@@ -24,8 +24,8 @@ namespace MatthL.PhysicalUnits.Tests.DimensionalFormulas
             // Assert
             Assert.Equal(3, result.Count);
             // Should be ordered by BaseUnitType enum value
-            Assert.Equal(BaseUnitType.Length, result[0].Item1);
-            Assert.Equal(BaseUnitType.Mass, result[1].Item1);
+            Assert.Equal(BaseUnitType.Length, result[1].Item1);
+            Assert.Equal(BaseUnitType.Mass, result[0].Item1);
             Assert.Equal(BaseUnitType.Time, result[2].Item1);
         }
 
@@ -148,8 +148,8 @@ namespace MatthL.PhysicalUnits.Tests.DimensionalFormulas
             Assert.All(result, r => Assert.True(r.Item2 < 0));
 
             // Should be ordered by key
-            Assert.Equal(BaseUnitType.Length, result[0].Item1);
-            Assert.Equal(BaseUnitType.Mass, result[1].Item1);
+            Assert.Equal(BaseUnitType.Length, result[1].Item1);
+            Assert.Equal(BaseUnitType.Mass, result[0].Item1);
             Assert.Equal(BaseUnitType.Time, result[2].Item1);
         }
 
@@ -191,8 +191,8 @@ namespace MatthL.PhysicalUnits.Tests.DimensionalFormulas
 
             // First two positive
             Assert.Equal(2, result.Count(r => r.Item2 > 0));
-            Assert.Equal(BaseUnitType.Length, result[0].Item1);
-            Assert.Equal(BaseUnitType.Mass, result[1].Item1);
+            Assert.Equal(BaseUnitType.Length, result[1].Item1);
+            Assert.Equal(BaseUnitType.Mass, result[0].Item1);
 
             // Last one negative
             Assert.Single(result.Where(r => r.Item2 < 0));

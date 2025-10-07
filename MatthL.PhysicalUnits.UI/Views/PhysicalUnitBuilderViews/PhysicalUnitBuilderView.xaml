@@ -1,0 +1,228 @@
+﻿<UserControl x:Class="MatthL.PhysicalUnits.UI.Views.PhysicalUnitBuilderViews.PhysicalUnitBuilderView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MatthL.PhysicalUnits.UI.Views.PhysicalUnitBuilderViews"
+                         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:boolean="clr-namespace:MatthL.WPF.Essentials.Converters;assembly=MatthL.WPF.Essentials.Converters"
+             xmlns:enums="clr-namespace:MatthL.PhysicalUnits.Core.Enums;assembly=MatthL.PhysicalUnits.Core"
+             xmlns:converters="clr-namespace:MatthL.PhysicalUnits.UI.Converters" xmlns:repositorysettingviews="clr-namespace:MatthL.PhysicalUnits.UI.Views.RepositorySettingViews" xmlns:physicalunitviews="clr-namespace:MatthL.PhysicalUnits.UI.Views.PhysicalUnitViews"
+             mc:Ignorable="d"
+             d:DesignHeight="400" d:DesignWidth="900"
+             Height="500"
+             x:Name="SelectorRoot">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MatthL.WPF.Essentials.Styles;component/StyleDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <boolean:BoolToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+            <boolean:BoolToInvisibilityConverter x:Key="InverseBooleanToVisibilityConverter" />
+            <boolean:BoolToInverseConverter x:Key="BooleanToInverseConverter" />
+            <boolean:EnumDisplayNameConverter x:Key="EnumDisplayNameConverter" />
+            <boolean:EnumDescriptionConverter x:Key="EnumDescriptionConverter" />
+            <converters:UnitTypeShortNameConverter x:Key="UnitTypeShortNameConverter" />
+
+            <!-- Style pour les ToggleButton qui se comportent comme des RadioButton -->
+            <Style x:Key="RadioToggleButtonStyle" TargetType="ToggleButton">
+                <Setter Property="Margin" Value="2" />
+                <Setter Property="Padding" Value="8,3" />
+                <Style.Triggers>
+                    <Trigger Property="IsChecked" Value="True">
+                        <Setter Property="Background" Value="#3E7BFA" />
+                        <Setter Property="Foreground" Value="White" />
+                        <Setter Property="FontWeight" Value="SemiBold" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid d:Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- Barre de recherche et boutons -->
+        <Grid Grid.Row="0" Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0" Text="Search :" FontSize="14" VerticalAlignment="Center" Margin="0,0,5,0" FontWeight="Bold" />
+            <TextBox Grid.Column="1" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" Padding="3" Margin="5,0,5,0" />
+            <repositorysettingviews:RepositorySettingButtonView Grid.Column="2" />
+            <ToggleButton Grid.Column="3" Margin="5,0,5,0" IsChecked="{Binding IsInBuilding}" Width="30">
+                <iconPacks:PackIconLucide Kind="Hammer" />
+            </ToggleButton>
+            <Button Grid.Column="4" Margin="5,0,5,0" Command="{Binding ClearSelectionCommand}" Style="{StaticResource RoundedButtonStyle}" Width="30">
+                <iconPacks:PackIconMaterial Kind="DeleteEmptyOutline" />
+            </Button>
+        </Grid>
+
+        <!-- Contenu principal -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="400" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <!-- Sélection manuelle -->
+            <Grid>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <!-- En-têtes -->
+                <TextBlock Grid.Row="0" Text="Categories" Margin="5" FontWeight="Bold" FontSize="14" Visibility="{Binding IsSearching, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
+                <TextBlock Grid.Row="2" Text="Unit Types" Margin="5" FontWeight="Bold" FontSize="14" Visibility="{Binding IsSearching, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
+                <TextBlock Grid.Row="4" Text="Units" Margin="5" FontWeight="Bold" FontSize="14" />
+
+                <!-- Listes -->
+                <ComboBox x:Name="DomainLB" Grid.Column="0" Grid.Row="1" Margin="5"
+                          Style="{StaticResource ModernComboBox}"
+                         ItemsSource="{Binding AvailableCategories}"
+                         SelectedItem="{Binding SelectedCategory}"
+                          Visibility="{Binding IsSearching, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={StaticResource EnumDisplayNameConverter}}"
+                                     ToolTip="{Binding Converter={StaticResource EnumDescriptionConverter}}" FontSize="12" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+
+                <ComboBox Grid.Column="1" Grid.Row="3" Margin="5"
+                          Style="{StaticResource ModernComboBox}"
+                         ItemsSource="{Binding AvailableUnitTypes}"
+                         SelectedItem="{Binding SelectedUnitType}"
+                          Visibility="{Binding IsSearching, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={StaticResource UnitTypeShortNameConverter}}" FontSize="12" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+
+                <ListBox Grid.Column="2" Grid.Row="5" Margin="5"
+                         x:Name="UnitListBox"
+                         ItemsSource="{Binding AvailableUnits}"
+                         SelectedItem="{Binding SelectedUnitName}"
+                         SelectionMode="Single"
+                         HorizontalAlignment="Stretch"
+                         HorizontalContentAlignment="Stretch"
+                         ScrollViewer.VerticalScrollBarVisibility="Auto"
+                         MouseDoubleClick="ListBox_MouseDoubleClick">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid HorizontalAlignment="Stretch">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Grid.Column="0" Text="{Binding}" FontWeight="Bold" />
+                                <TextBlock Grid.Column="1" Text="{Binding Name}" FontStyle="Italic" FontSize="10" VerticalAlignment="Center" Margin="10,0,0,0" />
+
+                                <Border Grid.Column="2" CornerRadius="3" Padding="3,1" Margin="5,0,0,0">
+                                    <Border.Style>
+                                        <Style TargetType="Border">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding UnitSystem}" Value="{x:Static enums:StandardUnitSystem.SI}">
+                                                    <Setter Property="Background" Value="#E6F7E6" />
+                                                    <Setter Property="BorderBrush" Value="#75C475" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding UnitSystem}" Value="{x:Static enums:StandardUnitSystem.Metric}">
+                                                    <Setter Property="Background" Value="#E1EBFF" />
+                                                    <Setter Property="BorderBrush" Value="#7DA7F5" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding UnitSystem}" Value="{x:Static enums:StandardUnitSystem.Imperial}">
+                                                    <Setter Property="Background" Value="#F9E1FF" />
+                                                    <Setter Property="BorderBrush" Value="#C27FDA" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding UnitSystem}" Value="{x:Static enums:StandardUnitSystem.US}">
+                                                    <Setter Property="Background" Value="#FFE1E1" />
+                                                    <Setter Property="BorderBrush" Value="#F57D7D" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding UnitSystem}" Value="{x:Static enums:StandardUnitSystem.Astronomical}">
+                                                    <Setter Property="Background" Value="#FFF5E1" />
+                                                    <Setter Property="BorderBrush" Value="#F5C27D" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding UnitSystem}" Value="{x:Static enums:StandardUnitSystem.Other}">
+                                                    <Setter Property="Background" Value="#E1FFFA" />
+                                                    <Setter Property="BorderBrush" Value="#7DF5E4" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                            <Setter Property="BorderThickness" Value="1" />
+                                        </Style>
+                                    </Border.Style>
+
+                                    <TextBlock>
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding UnitSystem}" Value="{x:Static enums:StandardUnitSystem.SI}">
+                                                        <Setter Property="Text" Value="SI" />
+                                                        <Setter Property="Foreground" Value="#267726" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding UnitSystem}" Value="{x:Static enums:StandardUnitSystem.Metric}">
+                                                        <Setter Property="Text" Value="M" />
+                                                        <Setter Property="Foreground" Value="#2653C6" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding UnitSystem}" Value="{x:Static enums:StandardUnitSystem.Imperial}">
+                                                        <Setter Property="Text" Value="IMP" />
+                                                        <Setter Property="Foreground" Value="#7726C6" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding UnitSystem}" Value="{x:Static enums:StandardUnitSystem.US}">
+                                                        <Setter Property="Text" Value="US" />
+                                                        <Setter Property="Foreground" Value="#C62626" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding UnitSystem}" Value="{x:Static enums:StandardUnitSystem.Astronomical}">
+                                                        <Setter Property="Text" Value="AST" />
+                                                        <Setter Property="Foreground" Value="#C67726" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding UnitSystem}" Value="{x:Static enums:StandardUnitSystem.Other}">
+                                                        <Setter Property="Text" Value="A" />
+                                                        <Setter Property="Foreground" Value="#26C6B2" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                                <Setter Property="FontSize" Value="9" />
+                                                <Setter Property="FontWeight" Value="Bold" />
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </Border>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
+        </Grid>
+        <!-- Modification de l'unité sélectionnée -->
+        <Grid Grid.Column="1" Margin="5" Grid.RowSpan="2">
+            <Border BorderBrush="Black" BorderThickness="5"
+            Visibility="{Binding IsInBuilding, Converter={StaticResource BooleanToVisibilityConverter}}" />
+
+            <physicalunitviews:PhysicalUnitView
+                PhysicalUnitViewModel="{Binding SelectedUnitViewModel}"
+                IsEditing="{Binding IsInBuilding}"
+                Margin="1" />
+        </Grid>
+    </Grid>
+</UserControl>

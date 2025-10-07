@@ -1,0 +1,45 @@
+﻿<UserControl x:Class="MatthL.PhysicalUnits.UI.Views.PrefixViews.PrefixSelectorButtonView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MatthL.PhysicalUnits.UI.Views.PrefixViews"
+            xmlns:converters="clr-namespace:MatthL.PhysicalUnits.UI.Converters"
+             xmlns:SmartPopup="clr-namespace:MatthL.WPF.Essentials.SmartPopups;assembly=MatthL.WPF.Essentials.SmartPopups">
+
+    <UserControl.Resources>
+        <converters:PrefixToDisplayConverter x:Key="PrefixDisplayConverter"/>
+    </UserControl.Resources>
+
+    <SmartPopup:SmartPopupButton x:Name="PopupButton" PreferredPlacement="Top" Background="Transparent" Padding="0" Margin="0" >
+        <SmartPopup:SmartPopupButton.ButtonContent>
+            <Border BorderBrush="Gray" BorderThickness="1" Background="White" 
+                    Padding="10,5" MinWidth="100">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0"
+                               Text="{Binding SelectedPrefix, RelativeSource={RelativeSource AncestorType={x:Type local:PrefixSelectorButtonView}}, Converter={StaticResource PrefixDisplayConverter}}" 
+                               FontSize="12"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Center"
+                               ToolTip="{Binding SelectedPrefix, RelativeSource={RelativeSource AncestorType={x:Type local:PrefixSelectorButtonView}}, Converter={StaticResource PrefixDisplayConverter}, ConverterParameter=Name}"/>
+
+                    <Path Grid.Column="1" 
+                          Data="M 0 0 L 4 4 L 8 0 Z" 
+                          Fill="Gray" 
+                          Margin="8,0,0,0"
+                          VerticalAlignment="Center"/>
+                </Grid>
+            </Border>
+        </SmartPopup:SmartPopupButton.ButtonContent>
+
+        <SmartPopup:SmartPopupButton.PopupContent>
+            <local:PrefixSelectorView
+                                      SelectedPrefix="{Binding SelectedPrefix, RelativeSource={RelativeSource AncestorType={x:Type local:PrefixSelectorButtonView}}, Mode=TwoWay}"/>
+        </SmartPopup:SmartPopupButton.PopupContent>
+    </SmartPopup:SmartPopupButton>
+</UserControl>

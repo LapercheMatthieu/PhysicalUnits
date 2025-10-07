@@ -12,57 +12,44 @@ namespace MatthL.PhysicalUnits.Computation.Converters
     {
         public static Func<double, double> GetFromSIFunction(this PhysicalUnit Unit)
         {
-            List<Func<double, double>> SingleFunctions = new List<Func<double, double>>();
+            // Vérifier si c'est une unité simple avec offset
+            bool hasOffset = Unit.BaseUnits.Any(bu => bu.Offset != 0);
+            bool isSimpleUnit = Unit.BaseUnits.Count == 1 && Math.Abs(Unit.BaseUnits.First().Exponent.ToDouble() - 1.0) < 1e-10;
 
-            // Pour chaque BaseUnit dans l'unité physique
-            foreach (var baseUnit in Unit.BaseUnits)
+            if (hasOffset && isSimpleUnit)
             {
-                double exponent = baseUnit.Exponent.ToDouble();
+                // Cas spécial : unité simple avec offset (ex: K → °C)
+                var baseUnit = Unit.BaseUnits.First();
                 double offset = baseUnit.Offset;
                 double factor = baseUnit.ConversionFactor.ToDouble();
                 double prefixFactor = (double)baseUnit.Prefix.GetSize();
-                double totalFactor = prefixFactor * factor;
 
-                // Créer la fonction INVERSE pour cette BaseUnit
-                Func<double, double> baseUnitFunction;
-
-                if (Math.Abs(exponent) < 1e-10) // Exposant nul
-                {
-                    baseUnitFunction = x => 1.0;
-                }
-                else if (offset == 0) // Pas d'offset (cas simple)
-                {
-                    // Inverse : x' = (x/totalFactor)^(1/exponent)
-                    baseUnitFunction = x => Math.Pow(x / totalFactor, exponent);
-                }
-                else // Avec offset
-                {
-                    if (exponent > 0) // Exposant positif : on retire l'offset
-                    {
-                        // Inverse de y = (ax + b)^n est x = (y^(1/n) - b)/a
-                        baseUnitFunction = x => Math.Pow((Math.Pow(x, 1.0 / exponent) - offset) / totalFactor, exponent);
-                    }
-                    else // Exposant négatif : pas d'offset
-                    {
-                        baseUnitFunction = x => Math.Pow(x / totalFactor, exponent);
-                    }
-                }
-
-                SingleFunctions.Add(baseUnitFunction);
+                // Inverse de : y = prefixFactor * (factor * x + offset)
+                // Donc : x = (y / prefixFactor - offset) / factor
+                return (inputValue) => (inputValue / prefixFactor - offset) / factor;
             }
-
-            // Combiner toutes les fonctions
-            return (inputValue) =>
+            else
             {
-                double result = 1.0;
-                for (int i = 0; i < SingleFunctions.Count; i++)
-                {
-                    result *= SingleFunctions[i](inputValue);
-                }
-                return result;
-            };
-        }
+                // Cas général : calculer le facteur de conversion global
+                double totalFactor = 1.0;
 
+                foreach (var baseUnit in Unit.BaseUnits)
+                {
+                    double exponent = baseUnit.Exponent.ToDouble();
+                    double factor = baseUnit.ConversionFactor.ToDouble();
+                    double prefixFactor = (double)baseUnit.Prefix.GetSize();
+
+                    if (Math.Abs(exponent) > 1e-10)
+                    {
+                        totalFactor *= Math.Pow(prefixFactor * factor, exponent);
+                    }
+                }
+
+                // Inverse de : y = x * totalFactor
+                // Donc : x = y / totalFactor
+                return (inputValue) => inputValue / totalFactor;
+            }
+        }
 
         public static double ConvertFromSIValue(this PhysicalUnit unit, double value)
         {

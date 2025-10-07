@@ -6,9 +6,8 @@
     public enum BaseUnitType
     {
         // The 7 base ones
-        Length,              // m
-
         Mass,                // kg
+        Length,              // m
         Time,                // s
         ElectricCurrent,     // A
         Temperature,         // K

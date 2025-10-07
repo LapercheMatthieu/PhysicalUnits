@@ -4,9 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MatthL.PhysicalUnits.Demo"
-        xmlns:views="clr-namespace:MatthL.PhysicalUnits.UI.Views;assembly=MatthL.PhysicalUnits.UI"
-        xmlns:viewsbuttons="clr-namespace:MatthL.PhysicalUnits.UI.ViewsButtons;assembly=MatthL.PhysicalUnits.UI"
-        xmlns:demo="clr-namespace:MatthL.PhysicalUnits.Demo"
+        xmlns:demo="clr-namespace:MatthL.PhysicalUnits.Demo" xmlns:physicalunitbuilderviews="clr-namespace:MatthL.PhysicalUnits.UI.Views.PhysicalUnitBuilderViews;assembly=MatthL.PhysicalUnits.UI"
         mc:Ignorable="d"
         Title="MainWindow" Height="800" Width="800"
          WindowState="Maximized" x:Name="MainWindowRoot">
@@ -19,9 +17,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <TextBox x:Name="Report" Grid.Row ="0" />
-        <views:PhysicalUnitBuilder Grid.Row="1" />
-        <viewsbuttons:PhysicalUnitButton Grid.Row="2" />
-        <viewsbuttons:PhysicalUnitCombobox x:Name="UnitCB" Grid.Row="3" />
+        <physicalunitbuilderviews:PhysicalUnitBuilderView Grid.Row="1" />
 
         <ScrollViewer Grid.Row="4">
             <demo:PhysicalUnitDemoControl />

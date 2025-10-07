@@ -4,21 +4,26 @@ using MatthL.PhysicalUnits.Core.EquationModels;
 using MatthL.PhysicalUnits.Core.Models;
 using MatthL.PhysicalUnits.DimensionalFormulas.Extensions;
 using MatthL.PhysicalUnits.Infrastructure.Library;
+using MatthL.PhysicalUnits.Infrastructure.Repositories;
 using Xunit;
 
 namespace MatthL.PhysicalUnits.Tests.DimensionalFormulas
 {
     public class DimensionalFormulasExtensionTests
     {
+        public DimensionalFormulasExtensionTests()
+        {
+            PhysicalUnitRepository.Initialize();
+        }
+
         [Fact]
         public void GetDimensionalFormula_PhysicalUnit_ReturnsCorrectFormula()
         {
             // Arrange - Speed (m/s)
             var baseUnit = StandardUnits.MeterPerSecond;
-            var physicalUnit = new PhysicalUnit(baseUnit);
 
             // Act
-            var result = physicalUnit.GetDimensionalFormula();
+            var result = baseUnit.GetDimensionalFormula();
 
             // Assert
             Assert.Equal("m/s", result);

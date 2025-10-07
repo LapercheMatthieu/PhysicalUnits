@@ -2,6 +2,7 @@
 using MatthL.PhysicalUnits.Core.Enums;
 using MatthL.PhysicalUnits.Core.EquationModels;
 using MatthL.PhysicalUnits.Core.Models;
+using MatthL.PhysicalUnits.DimensionalFormulas.Helpers;
 using MatthL.PhysicalUnits.Infrastructure.Extensions;
 using MatthL.PhysicalUnits.Infrastructure.Repositories;
 
