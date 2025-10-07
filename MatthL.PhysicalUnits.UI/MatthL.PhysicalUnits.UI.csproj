@@ -1,26 +1,41 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0-windows</TargetFramework>
-    <Nullable>enable</Nullable>
-    <UseWPF>true</UseWPF>
-    <ImplicitUsings>enable</ImplicitUsings>
+	  <TargetFramework>net8.0-windows</TargetFramework>
+	  <LangVersion>10.0</LangVersion>
+	  <ImplicitUsings>enable</ImplicitUsings>
+	  <Nullable>enable</Nullable>
+	  <UseWPF>true</UseWPF>
+	  
+	  <PackageId>MatthL.PhysicalUnits.WPF</PackageId>
+		<Title>Physical Units - WPF Controls</Title>
+		<Version>1.0.0</Version>
+		<Authors>Matthieu L</Authors>
+		<Company>MatthL</Company>
+		<Description>Professional WPF controls for dynamic physical unit manipulation. Includes smart unit builder, intelligent suggestions, equation-based selection, live conversion, and customizable repository settings. MVVM-ready controls with two-way binding support. Powered by MatthL.PhysicalUnits.</Description>
+		<PackageTags>wpf;units;physics;controls;ui;mvvm;conversion;builder;suggestions;engineering;measurement;usercontrol</PackageTags>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<RepositoryUrl>https://github.com/LapercheMatthieu/PhysicalUnits</RepositoryUrl>
+		<PackageProjectUrl>https://github.com/LapercheMatthieu/PhysicalUnits</PackageProjectUrl>
+		<RepositoryType>git</RepositoryType>
+	  
+	  
+	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+	 	  
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MatthL.PhysicalUnits" Version="1.0.0" />
     <PackageReference Include="MatthL.WPF.Essentials" Version="0.9.0" />
   </ItemGroup>
 	<ItemGroup>
 		<None Include="README.md" Pack="true" PackagePath="\" />
 		<None Include="LICENSE" Pack="true" PackagePath="\" />
 	</ItemGroup>
-
-	<ItemGroup>
-    <ProjectReference Include="..\MatthL.PhysicalUnits.Computation\MatthL.PhysicalUnits.Computation.csproj" />
-    <ProjectReference Include="..\MatthL.PhysicalUnits.Core\MatthL.PhysicalUnits.Core.csproj" />
-    <ProjectReference Include="..\MatthL.PhysicalUnits.DimensionalFormulas\MatthL.PhysicalUnits.DimensionalFormulas.csproj" />
-    <ProjectReference Include="..\MatthL.PhysicalUnits.Infrastructure\MatthL.PhysicalUnits.Infrastructure.csproj" />
-  </ItemGroup>
 	<ItemGroup>
 		<Folder Include="Resources\" />
 	</ItemGroup>

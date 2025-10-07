@@ -1,19 +1,22 @@
 # MatthL.PhysicalUnits.WPF
 
-A comprehensive WPF controls library for working with physical units in .NET applications. This package provides ready-to-use UI components that leverage the power of [MatthL.PhysicalUnits](https://www.nuget.org/packages/MatthL.PhysicalUnits/) to create intuitive, user-friendly interfaces for unit selection, conversion, and manipulation.
+Professional **WPF controls** for dynamic physical unit manipulation in .NET applications. A complete UI toolkit that brings the power of [MatthL.PhysicalUnits](https://www.nuget.org/packages/MatthL.PhysicalUnits/) directly to your users.
 
 [![NuGet](https://img.shields.io/nuget/v/MatthL.PhysicalUnits.WPF.svg)](https://www.nuget.org/packages/MatthL.PhysicalUnits.WPF/)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 ## 🎯 Key Features
 
-- ✅ **Ready-to-Use WPF Controls** - Drop-in UI components for unit management
-- ✅ **Unit Selection ComboBoxes** - Context-aware unit pickers with intelligent filtering
-- ✅ **Unit Builders** - Visual tools for creating composite units (m/s, N·m, etc.)
-- ✅ **Conversion Displays** - Real-time conversion visualization
-- ✅ **Equation Result Displays** - Show results of unit operations with suggestions
-- ✅ **Prefix Selectors** - Easy selection of SI prefixes (kilo, milli, etc.)
-- ✅ **MVVM-Friendly** - Full data binding support
+**Production-ready WPF controls that your users will love:**
+
+- ✅ **Smart Unit Builder** - Interactive control for building complex units with double click simplicity
+- ✅ **Intelligent Suggestions** - Context-aware unit recommendations based on mathematical operations
+- ✅ **One-Click Unit Selection** - Beautiful interfaces with search and filtering
+- ✅ **Live Unit Conversion** - Real-time conversion between compatible units
+- ✅ **Equation-Based Selection** - Automatically suggest units based on dimensional formulas
+- ✅ **MVVM-Ready** - Full two-way binding support with ViewModels
+- ✅ **Customizable Repository** - Filter units by system (SI, Imperial, US, etc.)
+- ✅ **Professional UI/UX** - Polished controls ready for enterprise applications
 
 ## 📦 Installation
 
@@ -21,453 +24,506 @@ A comprehensive WPF controls library for working with physical units in .NET app
 dotnet add package MatthL.PhysicalUnits.WPF
 ```
 
-**Prerequisites:**
-- .NET 6.0 or higher
-- WPF application
-- MatthL.PhysicalUnits (installed automatically as dependency)
-
 ## 🚀 Quick Start
 
-### 1. Initialize the Repository
+### Basic Unit Selection
 
-Before using any controls, initialize the physical unit repository in your application startup:
+The simplest way to let users select a physical unit:
+
+```xaml
+<Window xmlns:puw="clr-namespace:MatthL.PhysicalUnits.UI.ViewsButtons.PhysicalUnitBuilderButtonViews;assembly=MatthL.PhysicalUnits.UI">
+    
+    <puw:PhysicalUnitBuilderButtonView 
+        SelectedUnit="{Binding MyUnit, Mode=TwoWay}" />
+        
+</Window>
+```
 
 ```csharp
-using MatthL.PhysicalUnits.Infrastructure.Repositories;
+using MatthL.PhysicalUnits.Core.Models;
 
-public partial class App : Application
+public class MyViewModel : INotifyPropertyChanged
 {
-    protected override void OnStartup(StartupEventArgs e)
+    private PhysicalUnit _myUnit;
+    public PhysicalUnit MyUnit
     {
-        base.OnStartup(e);
-        
-        // Initialize the repository with 400+ units
-        PhysicalUnitRepository.Initialize();
+        get => _myUnit;
+        set { _myUnit = value; OnPropertyChanged(); }
     }
 }
 ```
 
-### 2. Add Namespace References
-
-In your XAML files, add the namespace:
-
-```xaml
-xmlns:wpf="clr-namespace:MatthL.PhysicalUnits.WPF;assembly=MatthL.PhysicalUnits.WPF"
-```
-
-### 3. Use the Controls
-
-```xaml
-<Window x:Class="YourApp.MainWindow"
-        xmlns:wpf="clr-namespace:MatthL.PhysicalUnits.WPF;assembly=MatthL.PhysicalUnits.WPF">
-    
-    <StackPanel>
-        <!-- Unit selector -->
-        <wpf:PhysicalUnitView SelectedUnit="{Binding MyUnit, Mode=TwoWay}" />
-        
-        <!-- Unit builder for composite units -->
-        <wpf:PhysicalUnitBuilderView ResultUnit="{Binding CompositeUnit, Mode=TwoWay}" />
-    </StackPanel>
-</Window>
-```
-
 ## 🎨 Available Controls
 
-### PhysicalUnitView
-![PhysicalUnitView](https://raw.githubusercontent.com/LapercheMatthieu/MatthL.PhysicalUnits/main/Resources/PhysicalUnitView.png)
+### 1. PhysicalUnitBuilderButtonView
 
-A comprehensive control for selecting and displaying physical units with filtering by domain and type.
+The most powerful control - a button that opens a comprehensive unit builder popup.
 
-```xaml
-<wpf:PhysicalUnitView 
-    SelectedUnit="{Binding MyUnit, Mode=TwoWay}"
-    ShowDomainFilter="True"
-    ShowTypeFilter="True" />
-```
-
-**Properties:**
-- `SelectedUnit` (PhysicalUnit) - The currently selected unit
-- `ShowDomainFilter` (bool) - Show domain filtering dropdown
-- `ShowTypeFilter` (bool) - Show unit type filtering dropdown
-
-### PhysicalUnitBuilderView
-![PhysicalUnitBuilderView](https://raw.githubusercontent.com/LapercheMatthieu/MatthL.PhysicalUnits/main/Resources/PhysicalUnitBuilder.png)
-
-Build composite units by multiplying, dividing, and raising units to powers.
-
-```xaml
-<wpf:PhysicalUnitBuilderView 
-    ResultUnit="{Binding BuilderResult, Mode=TwoWay}"
-    ShowPreview="True" />
-```
-
-**Properties:**
-- `ResultUnit` (PhysicalUnit) - The resulting composite unit
-- `ShowPreview` (bool) - Display real-time preview of the unit
+![PhysicalUnitBuilderButton](https://raw.githubusercontent.com/LapercheMatthieu/PhysicalUnits/master/MatthL.PhysicalUnits.UI/Resources/PhysicalUnitBuilderButton.png)
 
 **Features:**
-- Add multiple unit terms
-- Set exponents (including fractions like 1/2)
-- Real-time dimensional formula preview
-- Smart unit suggestions based on the composition
+- Search through 400+ units
+- Filter by domain (Mechanics, Electricity, etc.)
+- Build custom composite units
+- Convert between compatible units
+- Real-time unit preview
 
-### BaseUnitView
-![BaseUnitView](https://raw.githubusercontent.com/LapercheMatthieu/MatthL.PhysicalUnits/main/Resources/BaseUnitView.png)
-
-Select base units (length, mass, time, etc.) with optional prefix selection.
+**XAML Usage:**
 
 ```xaml
-<wpf:BaseUnitView 
-    SelectedBaseUnit="{Binding MyBaseUnit, Mode=TwoWay}"
-    ShowPrefix="True" />
+<puw:PhysicalUnitBuilderButtonView 
+    SelectedUnit="{Binding SelectedUnit, Mode=TwoWay}"
+    IsPopupOpen="{Binding IsBuilderOpen, Mode=TwoWay}" />
 ```
 
-### PrefixSelectorView
-![PrefixSelector](https://raw.githubusercontent.com/LapercheMatthieu/MatthL.PhysicalUnits/main/Resources/PrefixSelector.png)
+**Properties:**
+- `SelectedUnit` (PhysicalUnit) - The selected/built unit
+- `IsPopupOpen` (bool) - Controls popup visibility
+- `UnitToConvert` (PhysicalUnit) - When set, shows only compatible units for conversion
+- `IsOnlyConvertion` (bool) - Restricts to conversion mode only
 
-Standalone prefix selector for SI prefixes (nano, micro, milli, kilo, mega, etc.).
+**Conversion Mode:**
 
 ```xaml
-<wpf:PrefixSelectorView 
-    SelectedPrefix="{Binding MyPrefix, Mode=TwoWay}" />
+<!-- Show only units compatible with meters for conversion -->
+<puw:PhysicalUnitBuilderButtonView 
+    SelectedUnit="{Binding TargetUnit, Mode=TwoWay}"
+    UnitToConvert="{Binding SourceUnit}"
+    IsOnlyConvertion="True" />
 ```
 
-### PhysicalUnitEquationResultView
-![EquationResult](https://raw.githubusercontent.com/LapercheMatthieu/MatthL.PhysicalUnits/main/Resources/FormulaResultnmperus.png)
+### 2. PhysicalUnitEquationResultButtonView
 
-Display equation results with intelligent unit suggestions.
+Intelligent unit selection based on dimensional formulas and mathematical operations.
+
+![FormulaResult](https://raw.githubusercontent.com/LapercheMatthieu/PhysicalUnits/master/MatthL.PhysicalUnits.UI/Resources/FormulaResultmmperµs.png)
+
+**Features:**
+- Automatic unit suggestions from equations
+- Relevance scoring (prioritizes most common units)
+- Context-aware explanations
+- Formula display
+
+**XAML Usage:**
 
 ```xaml
-<wpf:PhysicalUnitEquationResultView 
+<puw:PhysicalUnitEquationResultButtonView 
     EquationTerms="{Binding MyEquation}"
-    SelectedResultUnit="{Binding ResultUnit, Mode=TwoWay}"
-    ShowSuggestions="True" />
+    SelectedUnit="{Binding ResultUnit, Mode=TwoWay}"
+    MaxSuggestions="10" />
+```
+
+**Code Example:**
+
+```csharp
+using MatthL.PhysicalUnits.Core.EquationModels;
+using MatthL.PhysicalUnits.Infrastructure.Library;
+using Fractions;
+
+// Force × Distance = Energy
+var force = StandardUnits.Newton();
+var distance = StandardUnits.Meter();
+
+var equation = new EquationTerms(
+    new PhysicalUnitTerm(force, new Fraction(1)),
+    new PhysicalUnitTerm(distance, new Fraction(1))
+);
+
+MyEquation = equation;
+// Automatically suggests: Joule, Newton·Meter, Watt·Hour, etc.
+```
+
+**Properties:**
+- `EquationTerms` (EquationTerms) - The equation to analyze
+- `SelectedUnit` (PhysicalUnit) - The chosen suggested unit
+- `MaxSuggestions` (int) - Maximum suggestions to display (default: 10)
+- `IsPopupOpen` (bool) - Controls popup visibility
+
+### 3. PhysicalUnitBuilderView
+
+The full-featured builder control (used internally by the button version).
+
+**XAML Usage:**
+
+```xaml
+<puv:PhysicalUnitBuilderView 
+    SelectedUnit="{Binding MyUnit, Mode=TwoWay}"
+    Height="600" />
 ```
 
 **Features:**
-- Displays the dimensional formula of the result
-- Shows top unit suggestions with relevance scores
-- Includes explanations for each suggested unit
+- Complete search and filtering
+- Category and type selection
+- Building mode with unit composition
+- Base unit management
+- Real-time dimensional formula display
 
-### ConvertForKgView
-![ConvertForKg](https://raw.githubusercontent.com/LapercheMatthieu/MatthL.PhysicalUnits/main/Resources/ConvertForKg.png)
+### 4. PhysicalUnitView
 
-Specialized conversion control optimized for specific use cases.
+Display a physical unit with all its details.
 
-## 📝 Complete Example
-
-Here's a complete example demonstrating unit selection, conversion, and equation building:
+**XAML Usage:**
 
 ```xaml
-<Window x:Class="PhysicalUnitsDemo.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:wpf="clr-namespace:MatthL.PhysicalUnits.WPF;assembly=MatthL.PhysicalUnits.WPF"
-        Title="Physical Units Demo" Height="600" Width="800">
+<puv:PhysicalUnitView 
+    PhysicalUnitViewModel="{Binding UnitViewModel}"
+    IsEditing="False" />
+```
+
+**Features:**
+- Shows unit name, symbol, and dimensional formula
+- Displays all base units with their exponents
+- Optional editing mode
+- Clean, professional presentation
+
+### 5. SpecificUnitSelectorView
+
+Simplified selector for specific unit categories.
+
+**XAML Usage:**
+
+```xaml
+<pus:SpecificUnitSelectorView 
+    Category="Time"
+    SelectedUnit="{Binding TimeUnit, Mode=TwoWay}" />
+```
+
+**Available Categories:**
+- `Time` - Second, Minute, Hour, Day, Week, Month, Year
+- `Electric` - Ampere, Volt (with prefixes)
+
+**Perfect for:** Dedicated time/frequency selectors, electrical parameter inputs
+
+### 6. RepositorySettingButtonView
+
+Configure which unit systems are available to users.
+
+**XAML Usage:**
+
+```xaml
+<purs:RepositorySettingButtonView />
+```
+
+**Features:**
+- Toggle SI/Metric units
+- Toggle Imperial units
+- Toggle US customary units
+- Toggle Astronomical units
+- Toggle Other systems
+
+Changes are applied globally through `PhysicalUnitRepository.Settings`.
+
+## 📋 Complete Example: Unit Conversion App
+
+Here's a complete example showing multiple controls working together:
+
+```xaml
+<Window x:Class="MyApp.MainWindow"
+        xmlns:puw="clr-namespace:MatthL.PhysicalUnits.UI.ViewsButtons.PhysicalUnitBuilderButtonViews;assembly=MatthL.PhysicalUnits.UI"
+        xmlns:pue="clr-namespace:MatthL.PhysicalUnits.UI.ViewsButtons.PhysicalUnitEquationResultButtonViews;assembly=MatthL.PhysicalUnits.UI">
     
-    <Grid Margin="20">
+    <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         
-        <!-- First Unit Input -->
-        <GroupBox Header="Unit 1" Grid.Row="0" Margin="0,0,0,10">
-            <StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="0,5">
-                    <TextBlock Text="Value:" Width="80" VerticalAlignment="Center"/>
-                    <TextBox Text="{Binding Value1, UpdateSourceTrigger=PropertyChanged}" 
-                             Width="100" Margin="5,0"/>
-                    <wpf:PhysicalUnitView SelectedUnit="{Binding Unit1, Mode=TwoWay}" 
-                                          Margin="10,0,0,0"/>
-                </StackPanel>
-                
-                <StackPanel Orientation="Horizontal" Margin="0,5">
-                    <TextBlock Text="In SI:" Width="80" VerticalAlignment="Center"/>
-                    <TextBlock Text="{Binding Value1InSI, StringFormat=N4}" 
-                               Width="100" VerticalAlignment="Center"/>
-                    <TextBlock Text="{Binding Unit1InSI.Symbol}" 
-                               Margin="5,0" VerticalAlignment="Center"/>
-                </StackPanel>
-            </StackPanel>
-        </GroupBox>
+        <!-- Value 1 -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10">
+            <TextBox Text="{Binding Value1, UpdateSourceTrigger=PropertyChanged}" 
+                     Width="100" Margin="0,0,10,0"/>
+            <puw:PhysicalUnitBuilderButtonView 
+                SelectedUnit="{Binding Unit1, Mode=TwoWay}" 
+                Width="200"/>
+        </StackPanel>
         
-        <!-- Second Unit Input -->
-        <GroupBox Header="Unit 2" Grid.Row="1" Margin="0,0,0,10">
-            <StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="0,5">
-                    <TextBlock Text="Value:" Width="80" VerticalAlignment="Center"/>
-                    <TextBox Text="{Binding Value2, UpdateSourceTrigger=PropertyChanged}" 
-                             Width="100" Margin="5,0"/>
-                    <wpf:PhysicalUnitView SelectedUnit="{Binding Unit2, Mode=TwoWay}" 
-                                          Margin="10,0,0,0"/>
-                </StackPanel>
-                
-                <StackPanel Orientation="Horizontal" Margin="0,5">
-                    <TextBlock Text="In SI:" Width="80" VerticalAlignment="Center"/>
-                    <TextBlock Text="{Binding Value2InSI, StringFormat=N4}" 
-                               Width="100" VerticalAlignment="Center"/>
-                    <TextBlock Text="{Binding Unit2InSI.Symbol}" 
-                               Margin="5,0" VerticalAlignment="Center"/>
-                </StackPanel>
-            </StackPanel>
-        </GroupBox>
+        <!-- Value 2 -->
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10">
+            <TextBox Text="{Binding Value2, UpdateSourceTrigger=PropertyChanged}" 
+                     Width="100" Margin="0,0,10,0"/>
+            <puw:PhysicalUnitBuilderButtonView 
+                SelectedUnit="{Binding Unit2, Mode=TwoWay}" 
+                Width="200"/>
+        </StackPanel>
         
-        <!-- Unit Conversion -->
-        <GroupBox Header="Convert To" Grid.Row="2" Margin="0,0,0,10">
-            <StackPanel>
-                <wpf:PhysicalUnitView SelectedUnit="{Binding TargetUnit, Mode=TwoWay}" 
-                                      Margin="0,5"/>
-                
-                <Grid Margin="0,5">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    
-                    <StackPanel Grid.Column="0" Orientation="Horizontal">
-                        <TextBlock Text="Value1 → " VerticalAlignment="Center"/>
-                        <TextBlock Text="{Binding ConvertedValue1, StringFormat=N4}" 
-                                   FontWeight="Bold" VerticalAlignment="Center"/>
-                    </StackPanel>
-                    
-                    <StackPanel Grid.Column="1" Orientation="Horizontal">
-                        <TextBlock Text="Value2 → " VerticalAlignment="Center"/>
-                        <TextBlock Text="{Binding ConvertedValue2, StringFormat=N4}" 
-                                   FontWeight="Bold" VerticalAlignment="Center"/>
-                    </StackPanel>
-                </Grid>
-            </StackPanel>
-        </GroupBox>
+        <!-- Equation Result -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="10">
+            <TextBlock Text="Result Unit:" Margin="0,0,10,0" 
+                       VerticalAlignment="Center"/>
+            <pue:PhysicalUnitEquationResultButtonView 
+                EquationTerms="{Binding EquationTerms}"
+                SelectedUnit="{Binding ResultUnit, Mode=TwoWay}"
+                Width="200"/>
+        </StackPanel>
         
-        <!-- Equation Builder -->
-        <GroupBox Header="Unit Equation" Grid.Row="3" Margin="0,0,0,10">
-            <StackPanel>
-                <Grid Margin="0,5">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="100"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="100"/>
-                    </Grid.ColumnDefinitions>
-                    
-                    <TextBlock Grid.Column="0" Text="Exponent 1:" 
-                               VerticalAlignment="Center" Margin="0,0,10,0"/>
-                    <TextBox Grid.Column="1" Text="{Binding Exponent1, UpdateSourceTrigger=PropertyChanged}"/>
-                    
-                    <TextBlock Grid.Column="2" Text="Exponent 2:" 
-                               VerticalAlignment="Center" Margin="20,0,10,0"/>
-                    <TextBox Grid.Column="3" Text="{Binding Exponent2, UpdateSourceTrigger=PropertyChanged}"/>
-                </Grid>
-                
-                <wpf:PhysicalUnitEquationResultView 
-                    EquationTerms="{Binding EquationTerms}"
-                    SelectedResultUnit="{Binding EquationResultUnit, Mode=TwoWay}"
-                    Margin="0,10,0,0"/>
-            </StackPanel>
-        </GroupBox>
-        
-        <!-- Reset Button -->
-        <Button Grid.Row="4" Content="Reset All" 
-                Command="{Binding ResetCommand}"
-                HorizontalAlignment="Right" VerticalAlignment="Bottom"
-                Width="100" Height="30" Margin="0,10,0,0"/>
+        <!-- Conversion Target -->
+        <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="10">
+            <TextBlock Text="Convert to:" Margin="0,0,10,0" 
+                       VerticalAlignment="Center"/>
+            <puw:PhysicalUnitBuilderButtonView 
+                SelectedUnit="{Binding TargetUnit, Mode=TwoWay}"
+                UnitToConvert="{Binding ResultUnit}"
+                Width="200"/>
+            <TextBlock Text="{Binding ConvertedValue}" 
+                       Margin="10,0,0,0"
+                       VerticalAlignment="Center"/>
+        </StackPanel>
     </Grid>
 </Window>
 ```
 
-**ViewModel:**
-
 ```csharp
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
+using CommunityToolkit.Mvvm.ComponentModel;
 using MatthL.PhysicalUnits.Core.Models;
 using MatthL.PhysicalUnits.Core.EquationModels;
-using MatthL.PhysicalUnits.Infrastructure.Extensions;
+using MatthL.PhysicalUnits.Computation.Extensions;
 using Fractions;
 
-public class MainViewModel : INotifyPropertyChanged
+public partial class MainViewModel : ObservableObject
 {
-    private double _value1 = 1.0;
-    private double _value2 = 1.0;
-    private PhysicalUnit _unit1;
-    private PhysicalUnit _unit2;
-    private PhysicalUnit _targetUnit;
-    private EquationTerms _equationTerms;
+    [ObservableProperty] private double _value1 = 100;
+    [ObservableProperty] private double _value2 = 50;
+    [ObservableProperty] private PhysicalUnit _unit1;
+    [ObservableProperty] private PhysicalUnit _unit2;
+    [ObservableProperty] private PhysicalUnit _resultUnit;
+    [ObservableProperty] private PhysicalUnit _targetUnit;
+    [ObservableProperty] private double _convertedValue;
     
-    public double Value1
+    public EquationTerms EquationTerms { get; private set; }
+    
+    partial void OnUnit1Changed(PhysicalUnit value) => UpdateEquation();
+    partial void OnUnit2Changed(PhysicalUnit value) => UpdateEquation();
+    partial void OnResultUnitChanged(PhysicalUnit value) => UpdateConversion();
+    partial void OnTargetUnitChanged(PhysicalUnit value) => UpdateConversion();
+    
+    private void UpdateEquation()
     {
-        get => _value1;
-        set { _value1 = value; OnPropertyChanged(); UpdateCalculations(); }
-    }
-    
-    public PhysicalUnit Unit1
-    {
-        get => _unit1;
-        set { _unit1 = value; OnPropertyChanged(); UpdateCalculations(); }
-    }
-    
-    public double Value1InSI => Unit1?.ConvertToSIValue(Value1) ?? 0;
-    public PhysicalUnit Unit1InSI => Unit1?.GetSIUnit();
-    
-    // Similar properties for Unit2, TargetUnit, etc.
-    
-    private void UpdateCalculations()
-    {
-        OnPropertyChanged(nameof(Value1InSI));
-        OnPropertyChanged(nameof(Unit1InSI));
-        OnPropertyChanged(nameof(ConvertedValue1));
+        if (Unit1 == null || Unit2 == null) return;
         
-        // Update equation terms
-        if (Unit1 != null && Unit2 != null)
-        {
-            var exp1 = ParseFraction(Exponent1);
-            var exp2 = ParseFraction(Exponent2);
-            
-            EquationTerms = new EquationTerms(
-                new PhysicalUnitTerm(Unit1, exp1),
-                new PhysicalUnitTerm(Unit2, exp2)
-            );
-        }
+        EquationTerms = new EquationTerms(
+            new PhysicalUnitTerm(Unit1, new Fraction(1)),
+            new PhysicalUnitTerm(Unit2, new Fraction(1))
+        );
+        OnPropertyChanged(nameof(EquationTerms));
     }
     
-    public event PropertyChangedEventHandler PropertyChanged;
-    protected void OnPropertyChanged([CallerMemberName] string name = null) =>
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+    private void UpdateConversion()
+    {
+        if (ResultUnit == null || TargetUnit == null) return;
+        
+        var resultValue = Value1 * Value2; // Simplified
+        ConvertedValue = ResultUnit.ConvertValue(TargetUnit, resultValue);
+    }
 }
+```
+
+## 🎬 Real-World Use Cases
+
+### Engineering Calculator
+
+```xaml
+<!-- Stress calculation: σ = F/A -->
+<StackPanel>
+    <TextBlock Text="Force (F):" />
+    <StackPanel Orientation="Horizontal">
+        <TextBox Text="{Binding Force}" Width="100"/>
+        <puw:PhysicalUnitBuilderButtonView SelectedUnit="{Binding ForceUnit}"/>
+    </StackPanel>
+    
+    <TextBlock Text="Area (A):" />
+    <StackPanel Orientation="Horizontal">
+        <TextBox Text="{Binding Area}" Width="100"/>
+        <puw:PhysicalUnitBuilderButtonView SelectedUnit="{Binding AreaUnit}"/>
+    </StackPanel>
+    
+    <TextBlock Text="Stress (σ):" />
+    <pue:PhysicalUnitEquationResultButtonView 
+        EquationTerms="{Binding StressEquation}"
+        SelectedUnit="{Binding StressUnit}"/>
+    <!-- Automatically suggests: Pascal, Bar, PSI, etc. -->
+</StackPanel>
+```
+
+### Scientific Data Entry
+
+```xaml
+<!-- Let users enter measurements in their preferred units -->
+<DataGrid ItemsSource="{Binding Measurements}">
+    <DataGrid.Columns>
+        <DataGridTextColumn Header="Value" Binding="{Binding Value}"/>
+        <DataGridTemplateColumn Header="Unit">
+            <DataGridTemplateColumn.CellTemplate>
+                <DataTemplate>
+                    <puw:PhysicalUnitBuilderButtonView 
+                        SelectedUnit="{Binding Unit, Mode=TwoWay}"
+                        UnitToConvert="{Binding DataContext.RequiredUnit, 
+                                       RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                        IsOnlyConvertion="True"/>
+                </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+        </DataGrid.Columns>
+    </DataGrid.Columns>
+</DataGrid>
+```
+
+### Physics Problem Solver
+
+```xaml
+<!-- Kinetic energy: E = ½mv² -->
+<StackPanel>
+    <TextBlock Text="Mass:" />
+    <puw:PhysicalUnitBuilderButtonView SelectedUnit="{Binding Mass}"/>
+    
+    <TextBlock Text="Velocity:" />
+    <puw:PhysicalUnitBuilderButtonView SelectedUnit="{Binding Velocity}"/>
+    
+    <TextBlock Text="Energy Result:" />
+    <pue:PhysicalUnitEquationResultButtonView 
+        EquationTerms="{Binding EnergyEquation}"
+        SelectedUnit="{Binding EnergyUnit}"/>
+    <!-- Suggests: Joule, Watt·Hour, Calorie, BTU, etc. -->
+</StackPanel>
 ```
 
 ## 🎨 Customization
 
-### Custom Button Styles
+### Styling the Controls
 
-All controls support custom button styling through resources:
-
-```xaml
-<wpf:PhysicalUnitBuilderView>
-    <wpf:PhysicalUnitBuilderView.Resources>
-        <Style TargetType="Button" x:Key="CustomButtonStyle">
-            <Setter Property="Background" Value="#2196F3"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="Padding" Value="10,5"/>
-        </Style>
-    </wpf:PhysicalUnitBuilderView.Resources>
-</wpf:PhysicalUnitBuilderView>
-```
-
-### Icons and Images
-
-The package includes built-in icons for various operations:
-
-- ![Composed Unit](https://raw.githubusercontent.com/LapercheMatthieu/MatthL.PhysicalUnits/main/Resources/ComposedUnit.png) Composite units
-- ![Custom Unit](https://raw.githubusercontent.com/LapercheMatthieu/MatthL.PhysicalUnits/main/Resources/CustomUnit.png) Custom units
-- ![Empty Builder](https://raw.githubusercontent.com/LapercheMatthieu/MatthL.PhysicalUnits/main/Resources/EmptyPhysicalUnitBuilder.png) Empty state
-- ![Newton](https://raw.githubusercontent.com/LapercheMatthieu/MatthL.PhysicalUnits/main/Resources/NewtonRepresentation.png) Physical quantities
-- ![Quick Time](https://raw.githubusercontent.com/LapercheMatthieu/MatthL.PhysicalUnits/main/Resources/QuickTime.png) Time units
-- ![Search](https://raw.githubusercontent.com/LapercheMatthieu/MatthL.PhysicalUnits/main/Resources/SearchForce.png) Search functionality
-
-## 🔧 Advanced Features
-
-### Repository Settings View
-
-Configure which units are available in your application:
+All controls support standard WPF styling:
 
 ```xaml
-<wpf:RepositorySettingView 
-    AllowCustomUnits="True"
-    EnabledDomains="{Binding EnabledDomains}"
-    EnabledTypes="{Binding EnabledTypes}" />
+<puw:PhysicalUnitBuilderButtonView 
+    SelectedUnit="{Binding MyUnit}"
+    Background="LightBlue"
+    Foreground="DarkBlue"
+    FontSize="14"
+    Padding="10,5"/>
 ```
 
-### Specific Unit Selector Views
+### Repository Settings
 
-For domain-specific applications, use specialized selectors:
-
-```xaml
-<!-- Only show time-related units -->
-<wpf:SpecificUnitSelectorView 
-    AllowedDomains="Time"
-    SelectedUnit="{Binding Duration, Mode=TwoWay}" />
-```
-
-### Physical Unit Builder Button
-
-Add quick-access builder buttons to your interface:
-
-```xaml
-<wpf:PhysicalUnitBuilderButton 
-    ResultUnit="{Binding MyCompositeUnit, Mode=TwoWay}"
-    ButtonText="Build Unit" />
-```
-
-## 📊 Unit Type Coverage
-
-The controls support all unit types from the core library:
-
-- **Base Units**: Length, Mass, Time, Temperature, Current, Amount, Luminosity
-- **Mechanics**: Force, Pressure, Energy, Power, Torque, Momentum
-- **Electricity**: Voltage, Resistance, Capacitance, Inductance, Charge
-- **Thermodynamics**: Heat Flux, Thermal Conductivity, Entropy
-- **Fluidics**: Flow Rate, Viscosity, Density
-- **Chemistry**: Molarity, Molar Mass, Concentration
-- **Optics**: Illuminance, Luminous Intensity
-- **Economics**: Cost per Unit, Energy Cost
-- **Computing**: Bit Rate, Data Size
-- **Transport**: Fuel Efficiency
-
-## 🧪 Testing Your UI
-
-When testing your WPF application:
+Configure available unit systems programmatically:
 
 ```csharp
-[TestInitialize]
-public void Setup()
-{
-    // Initialize repository before tests
-    PhysicalUnitRepository.Initialize();
-}
+using MatthL.PhysicalUnits.Infrastructure.Repositories;
 
-[TestMethod]
-public void TestUnitSelection()
+// Show only SI and Metric units
+PhysicalUnitRepository.Settings.ShowMetrics = true;
+PhysicalUnitRepository.Settings.ShowImperial = false;
+PhysicalUnitRepository.Settings.ShowUS = false;
+PhysicalUnitRepository.Settings.ShowAstronomic = false;
+PhysicalUnitRepository.Settings.ShowOther = false;
+```
+
+### Custom Suggestions
+
+Control the suggestion behavior:
+
+```xaml
+<pue:PhysicalUnitEquationResultButtonView 
+    EquationTerms="{Binding Equation}"
+    SelectedUnit="{Binding Unit}"
+    MaxSuggestions="5"/>  <!-- Show only top 5 suggestions -->
+```
+
+## 🔧 Advanced Scenarios
+
+### Building Custom Units
+
+Enable building mode to let users create composite units:
+
+```csharp
+// In your ViewModel
+public void EnableUnitBuilding()
 {
-    var viewModel = new MainViewModel();
-    var meter = StandardUnits.Meter();
-    
-    viewModel.Unit1 = meter;
-    viewModel.Value1 = 100;
-    
-    Assert.AreEqual(100, viewModel.Value1InSI);
+    // When IsInBuilding is true, users can double-click units to combine them
+    BuilderViewModel.IsInBuilding = true;
 }
 ```
 
-## 🔗 Related Packages
+### Working with ViewModels
 
-- [MatthL.PhysicalUnits](https://www.nuget.org/packages/MatthL.PhysicalUnits/) - Core library (auto-installed)
-- [MatthL.PhysicalUnits.Core](https://www.nuget.org/packages/MatthL.PhysicalUnits.Core/) - Base models
-- [MatthL.PhysicalUnits.Infrastructure](https://www.nuget.org/packages/MatthL.PhysicalUnits.Infrastructure/) - Unit library
+The package provides ready-to-use ViewModels:
+
+```csharp
+using MatthL.PhysicalUnits.UI.ViewModels;
+
+// PhysicalUnitViewModel - wraps a PhysicalUnit with observable properties
+var unitViewModel = new PhysicalUnitViewModel(myUnit);
+unitViewModel.CanEdit = true;
+unitViewModel.GotModified += OnUnitModified;
+
+// BaseUnitViewModel - wraps individual base units
+var baseUnitViewModel = new BaseUnitViewModel(baseUnit);
+baseUnitViewModel.Prefix = Prefix.kilo;
+```
+
+### Event Handling
+
+All controls expose useful events:
+
+```csharp
+builderButtonView.SelectedUnitChanged += (sender, unit) =>
+{
+    Console.WriteLine($"User selected: {unit.Name}");
+};
+```
+
+## 📊 Control Comparison
+
+| Control | Use Case | Complexity | Best For |
+|---------|----------|------------|----------|
+| **PhysicalUnitBuilderButtonView** | General unit selection | Medium | Most applications |
+| **PhysicalUnitEquationResultButtonView** | Formula-based selection | Low | Calculators, physics apps |
+| **SpecificUnitSelectorView** | Limited predefined units | Low | Simple dropdowns |
+| **PhysicalUnitBuilderView** | Advanced unit building | High | Power users, custom units |
+| **RepositorySettingButtonView** | System configuration | Low | App settings |
+
+## 🎯 Design Principles
+
+These controls follow WPF best practices:
+
+- **MVVM-Friendly** - Full support for data binding and commands
+- **Dependency Properties** - All key properties are bindable
+- **Reusable** - Drop into any WPF application
+- **Performant** - Optimized for smooth UI interactions
+- **Accessible** - Keyboard navigation and screen reader support
+
+## 📚 Related Documentation
+
+- [MatthL.PhysicalUnits Core Library](https://github.com/LapercheMatthieu/PhysicalUnits) - The underlying unit system
+- [WPF Data Binding](https://docs.microsoft.com/en-us/dotnet/desktop/wpf/data/) - Microsoft's binding guide
+- [MVVM Pattern](https://docs.microsoft.com/en-us/dotnet/architecture/maui/mvvm) - Architecture guidance
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit issues, feature requests, or pull requests.
 
 ## 📄 License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-## 👤 Author
+## 💤 Author
 
 **MatthL**
 
 ## 🙏 Acknowledgments
 
-- Built on top of MatthL.PhysicalUnits core library
-- Designed for real-world WPF applications
-- Community-driven development
+- Built with ❤️ for WPF developers who need professional unit handling
+- Powered by [MatthL.PhysicalUnits](https://www.nuget.org/packages/MatthL.PhysicalUnits/)
+- Thanks to the WPF community for feedback and support
 
 ---
 
 <div align="center">
 
-**Need help?** Check out the [Wiki](https://github.com/LapercheMatthieu/MatthL.PhysicalUnits/wiki) or open an [Issue](https://github.com/LapercheMatthieu/MatthL.PhysicalUnits/issues)
+**Ready to give your users powerful unit manipulation capabilities?**
+
+Install now: `dotnet add package MatthL.PhysicalUnits.WPF`
+
+---
 
 Made with ❤️ by [Matthieu L](https://github.com/LapercheMatthieu)
 
